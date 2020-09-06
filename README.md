@@ -1,4 +1,3 @@
-
 ## Quick Start Guide
 
 Install a current or recommended LTS version of [Node](https://nodejs.org/en/)

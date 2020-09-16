@@ -1,0 +1,33 @@
+@import 
+"../abstracts/abstracts",
+"./resets",
+ "./typography";
+
+ :root{
+   @include small{
+     font-size: 0.9rem;
+   }
+ }
+
+ body {
+    margin: 0;
+    font-family:'Inter', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: $color-dark;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  .container-fixed {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    /* overflow: hidden; */
+    padding: 0 5px;
+  }

@@ -1,0 +1,9 @@
+@import "../../styles/abstracts/_mixins.scss";
+
+.page {
+  padding: 10px;
+  @include d-flex-center-all {
+    flex-direction: column;
+  }
+  height: 100vh;
+}

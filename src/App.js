@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import getTheme from './utils/theme';
 import Landing from './pages/Landing/Landing';
+import Layout from './components/Layout/Layout';
 
 const App = () => {
     const [themeColor, setThemeColor] = useState('light');
@@ -14,7 +15,8 @@ const App = () => {
     };
     return (
         <ThemeProvider theme={getTheme(themeColor)}>
-            <Landing themeColor={themeColor} setThemeColor={handleThemeColor} />
+            {/* <Landing /> */}
+            <Layout themeColor={themeColor} setThemeColor={handleThemeColor} />
         </ThemeProvider>
     );
 };

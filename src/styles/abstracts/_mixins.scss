@@ -1,0 +1,30 @@
+@mixin d-flex-center-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @content;
+}
+@mixin img-responsive {
+    width: 100%;
+    height: 100%;
+    @content;
+}
+
+//* Breakpoints */
+@mixin small() {
+    @media only screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+@mixin medium() {
+    @media only screen and (max-width: 960px) {
+        @content;
+    }
+}
+
+@mixin large() {
+    @media only screen and (max-width: 1280px) {
+        @content;
+    }
+}

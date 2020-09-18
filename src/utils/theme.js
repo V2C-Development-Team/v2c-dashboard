@@ -14,6 +14,9 @@ const getTheme = (type) =>
             secondary: {
                 main: '#1A73E8',
             },
+            text: {
+                secondary: '#5f6368',
+            },
         },
         typography: {
             textTransform: 'none',

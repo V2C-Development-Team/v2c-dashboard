@@ -3,7 +3,6 @@ import './App.scss';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import getTheme from './utils/theme';
-import Landing from './pages/Landing/Landing';
 import Layout from './components/Layout/Layout';
 
 const App = () => {

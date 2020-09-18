@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Header from '../Header/Header';
 import classes from './Layout.module.scss';
-import Landing from '../../pages/Landing/Landing';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 

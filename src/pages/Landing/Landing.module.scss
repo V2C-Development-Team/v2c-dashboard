@@ -1,15 +1,21 @@
 @import '../../styles/abstracts/_mixins.scss';
 
 .page {
-    padding: 10px;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
+    text-align: center;
+}
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6em 10px 5em;
+    width: 100%;
 }
 
 .logo {
-    margin-top: 6em;
     margin-bottom: 3em;
     width: 80px;
     height: 80px;
@@ -17,4 +23,15 @@
 .logo img {
     width: 100%;
     height: 100%;
+}
+
+.imgContainer {
+    margin: 5em auto 3em;
+    width: 100%;
+    max-width: 900px;
+    @include d-flex-center-all;
+}
+
+.imgContainer img {
+    @include img-responsive;
 }

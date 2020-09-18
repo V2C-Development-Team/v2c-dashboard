@@ -5,10 +5,7 @@ import Landing from '../../pages/Landing/Landing';
 const Main = (props) => {
     return (
         <div className={classes.main}>
-            <Landing
-                themeColor={props.themeColor}
-                setThemeColor={props.setThemeColor}
-            />
+            <Landing />
         </div>
     );
 };

@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Button, Paper } from '@material-ui/core';
+import { Brightness4, Brightness7 } from '@material-ui/icons';
 
 import logo from '../../assets/images/v2c_logo.png';
 
@@ -25,12 +26,11 @@ const useStyles = makeStyles((theme) => ({
     menuButton: {
         marginRight: theme.spacing(2),
     },
+    iconButton: {
+        marginRight: theme.spacing(2),
+    },
     title: {
-        display: 'none',
         fontFamily: 'Inter',
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
-        },
     },
     appBar: {},
     imgContainer: {
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+const PrimarySearchAppBar = (props) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -101,6 +101,8 @@ export default function PrimarySearchAppBar() {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const themeColor = props.themeColor;
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -180,9 +182,9 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
-        <div>
+        <header>
             <Paper elevation={0} square className={classes.appBar}>
-                <AppBar position="static">
+                <AppBar position="fixed">
                     <Toolbar>
                         {isAuthenticated && (
                             <IconButton
@@ -219,6 +221,18 @@ export default function PrimarySearchAppBar() {
             />
           </div> */}
                         <div className={classes.grow} />
+
+                        <IconButton
+                            color="inherit"
+                            onClick={() => props.setThemeColor()}
+                            className={classes.iconButton}
+                        >
+                            {themeColor === 'light' ? (
+                                <Brightness4 />
+                            ) : (
+                                <Brightness7 />
+                            )}
+                        </IconButton>
                         {!isAuthenticated && (
                             <Button variant="contained" color="secondary">
                                 Sign in
@@ -278,6 +292,8 @@ export default function PrimarySearchAppBar() {
             </Paper>
             {isAuthenticated && { renderMobileMenu }}
             {isAuthenticated && { renderMenu }}
-        </div>
+        </header>
     );
-}
+};
+
+export default PrimarySearchAppBar;

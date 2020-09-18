@@ -7,11 +7,11 @@ import Main from '../Main/Main';
 const Layout = (props) => {
     return (
         <div className={classes.layout}>
-            <Header />
-            <Main
+            <Header
                 themeColor={props.themeColor}
                 setThemeColor={props.setThemeColor}
             />
+            <Main />
         </div>
     );
 };

@@ -16,7 +16,12 @@ const App = () => {
     return (
         <ThemeProvider theme={getTheme(themeColor)}>
             {/* <Landing /> */}
-            <Layout themeColor={themeColor} setThemeColor={handleThemeColor} />
+            <div className={themeColor}>
+                <Layout
+                    themeColor={themeColor}
+                    setThemeColor={handleThemeColor}
+                />
+            </div>
         </ThemeProvider>
     );
 };

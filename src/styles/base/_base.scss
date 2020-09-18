@@ -1,33 +1,37 @@
-@import 
-"../abstracts/abstracts",
-"./resets",
- "./typography";
+@import '../abstracts/abstracts', './resets', './typography';
 
- :root{
-   @include small{
-     font-size: 0.9rem;
-   }
- }
+:root {
+    @include small {
+        font-size: 0.9rem;
+    }
+}
 
- body {
+body {
     margin: 0;
-    font-family:'Inter', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: $color-dark;
-  }
-  
-  code {
+}
+
+code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
-  .container-fixed {
+        monospace;
+}
+
+.container-fixed {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
     /* overflow: hidden; */
     padding: 0 5px;
-  }
+}
+
+.bg-secondary {
+    background-color: $color-light;
+}
+.dark .bg-secondary {
+    background-color: $color-dark;
+}

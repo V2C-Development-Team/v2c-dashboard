@@ -1,69 +1,87 @@
 import React from 'react';
-import { Container, Typography, Link as MLink } from '@material-ui/core';
+import { Container, Typography, Link as MLink, Paper } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import classes from './Footer.module.scss';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
         <footer>
-            <Container maxWidth="md">
-                <div className={classes.footer}>
-                    <Typography color="textSecondary">
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="textPrimary"
-                            variant="h5"
+            <Paper square elevation={0}>
+                <Container maxWidth="md">
+                    <div className={classes.footer}>
+                        <Typography
+                            color="textSecondary"
+                            style={{ verticalAlign: 'bottom' }}
+                        >
+                            <Link to="/">
+                                <Typography
+                                    color="textSecondary"
+                                    variant="h6"
+                                    style={{
+                                        fontFamily: 'Inter',
+                                        marginRight: 55,
+                                        fontWeight: 600,
+                                    }}
+                                    display="inline"
+                                >
+                                    V2C
+                                </Typography>
+                            </Link>
+                            <Link to="/privacy">
+                                <Typography
+                                    color="textSecondary"
+                                    style={{ marginRight: 35 }}
+                                    display="inline"
+                                >
+                                    Privacy
+                                </Typography>
+                            </Link>
+                            <Link to="/about">
+                                <Typography
+                                    color="textSecondary"
+                                    style={{ marginRight: 35 }}
+                                    display="inline"
+                                >
+                                    About
+                                </Typography>
+                            </Link>
+                            <Link to="/team">
+                                <Typography
+                                    color="textSecondary"
+                                    style={{ marginRight: 35 }}
+                                    display="inline"
+                                >
+                                    Team
+                                </Typography>
+                            </Link>
+                        </Typography>
+                        <Typography
                             style={{
-                                fontFamily: 'Inter',
-                                marginRight: 55,
-                                fontWeight: 600,
+                                marginLeft: 'auto',
+                                display: 'inline-block',
                             }}
+                            color="textSecondary"
                         >
-                            V2C
-                        </MLink>
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="inherit"
-                            style={{ marginRight: 35 }}
-                        >
-                            Privacy
-                        </MLink>
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="inherit"
-                            style={{ marginRight: 35 }}
-                        >
-                            About
-                        </MLink>
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="inherit"
-                            style={{ marginRight: 35 }}
-                        >
-                            Team
-                        </MLink>
-                    </Typography>
-                    <Typography
-                        style={{ marginLeft: 'auto', display: 'inline-block' }}
-                        color="textSecondary"
-                    >
-                        <MLink href="#" color="inherit" underline="none">
-                            <HelpOutlineIcon
-                                color="inherit"
-                                style={{
-                                    verticalAlign: 'bottom',
-                                    marginRight: 5,
-                                }}
-                            />
-                            Help
-                        </MLink>
-                    </Typography>
-                </div>
-            </Container>
+                            <Link to="/help">
+                                <Typography
+                                    color="textSecondary"
+                                    display="inline"
+                                >
+                                    <HelpOutlineIcon
+                                        color="inherit"
+                                        style={{
+                                            verticalAlign: 'bottom',
+                                            marginRight: 5,
+                                        }}
+                                    />
+                                    Help
+                                </Typography>
+                            </Link>
+                        </Typography>
+                    </div>
+                </Container>
+            </Paper>
         </footer>
     );
 };

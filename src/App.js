@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.scss';
 import { ThemeProvider } from '@material-ui/core/styles';
-
 import getTheme from './utils/theme';
 import Layout from './components/Layout/Layout';
 

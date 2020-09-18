@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -196,17 +197,25 @@ const PrimarySearchAppBar = (props) => {
                                 <MenuIcon />
                             </IconButton>
                         )}
-                        <div className={classes.imgContainer}>
-                            <img src={logo} alt="v2c logo" />
-                        </div>
-
-                        <Typography
-                            className={classes.title}
-                            variant="h6"
-                            noWrap
+                        <Link
+                            to="/"
+                            style={{
+                                color: 'inherit',
+                                display: 'flex',
+                                alignItems: 'flex-end',
+                            }}
                         >
-                            V2C
-                        </Typography>
+                            <div className={classes.imgContainer}>
+                                <img src={logo} alt="v2c logo" />
+                            </div>
+                            <Typography
+                                className={classes.title}
+                                variant="h6"
+                                noWrap
+                            >
+                                V2C
+                            </Typography>
+                        </Link>
                         {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -234,9 +243,11 @@ const PrimarySearchAppBar = (props) => {
                             )}
                         </IconButton>
                         {!isAuthenticated && (
-                            <Button variant="contained" color="secondary">
-                                Sign in
-                            </Button>
+                            <Link to="/login">
+                                <Button variant="contained" color="secondary">
+                                    Sign in
+                                </Button>
+                            </Link>
                         )}
                         {isAuthenticated && (
                             <Fragment>

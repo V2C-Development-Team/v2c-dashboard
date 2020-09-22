@@ -1,7 +1,7 @@
 @import '../abstracts/abstracts', './resets', './typography';
 
 :root {
-    @include small {
+    @include screen_sm {
         font-size: 0.9rem;
     }
 }
@@ -38,4 +38,10 @@ code {
 
 a {
     text-decoration: none;
+}
+input:-webkit-autofill {
+    caret-color: inherit !important;
+    box-shadow: 0 0 0 30px transparent inset !important;
+    background-color: transparent !important;
+    -webkit-text-fill-color: inherit !important;
 }

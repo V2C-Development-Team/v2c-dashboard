@@ -11,19 +11,19 @@
 }
 
 //* Breakpoints */
-@mixin small() {
+@mixin screen_sm() {
     @media only screen and (max-width: 600px) {
         @content;
     }
 }
 
-@mixin medium() {
+@mixin screen_md() {
     @media only screen and (max-width: 960px) {
         @content;
     }
 }
 
-@mixin large() {
+@mixin screen_lg() {
     @media only screen and (max-width: 1280px) {
         @content;
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +12,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,6 +42,44 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
     const classes = useStyles();
+    const { register, handleSubmit } = useForm();
+    const [emailError, setEmailError] = useState({
+        error: false,
+        errorHelper: '',
+    });
+    const [passwordError, setPasswordError] = useState({
+        error: false,
+        errorHelper: '',
+    });
+
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [passwordType, setPasswordType] = useState('password');
+
+    const handlePasswordToggle = () => {
+        setIsPasswordVisible((isPasswordVisible) => !isPasswordVisible);
+        setPasswordType((passwordType) =>
+            passwordType === 'password' ? 'text' : 'password'
+        );
+    };
+
+    const formSubmit = (data) => {
+        if (!isEmail(data.email)) {
+            setEmailError({
+                error: true,
+                errorHelper: 'Enter a valid email address',
+            });
+        } else {
+            setEmailError({ error: false, errorHelper: '' });
+        }
+        if (isEmpty(data.password)) {
+            setPasswordError({
+                error: true,
+                errorHelper: 'Password cannot be empty',
+            });
+        } else {
+            setPasswordError({ error: false, errorHelper: '' });
+        }
+    };
 
     return (
         <Paper square elevation={0} style={{ flex: 1 }}>
@@ -46,8 +91,13 @@ export default function SignIn() {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <form
+                        className={classes.form}
+                        noValidate
+                        onSubmit={handleSubmit((data) => formSubmit(data))}
+                    >
                         <TextField
+                            inputRef={register}
                             variant="outlined"
                             margin="normal"
                             required
@@ -57,21 +107,47 @@ export default function SignIn() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            error={emailError.error}
+                            helperText={emailError.errorHelper}
                         />
                         <TextField
+                            inputRef={register}
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
                             name="password"
                             label="Password"
-                            type="password"
+                            type={passwordType}
                             id="password"
                             autoComplete="current-password"
+                            error={passwordError.error}
+                            helperText={passwordError.errorHelper}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handlePasswordToggle}
+                                        >
+                                            {isPasswordVisible ? (
+                                                <Visibility />
+                                            ) : (
+                                                <VisibilityOff />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
                         <FormControlLabel
                             control={
-                                <Checkbox value="remember" color="primary" />
+                                <Checkbox
+                                    inputRef={register}
+                                    defaultValue={false}
+                                    name="remember"
+                                    color="primary"
+                                />
                             }
                             label="Remember me"
                         />

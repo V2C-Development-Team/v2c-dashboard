@@ -1,5 +1,13 @@
+@import '../../styles/abstracts/_mixins.scss';
 .footer {
     padding: 40px 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+}
+.links {
+    display: inline-block;
+    margin-right: 35px !important;
+    @include screen_sm {
+        margin-right: 15px !important;
+    }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Link as MLink, Paper } from '@material-ui/core';
+import { Container, Typography, Paper } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import classes from './Footer.module.scss';
 import { Link } from 'react-router-dom';
@@ -10,10 +10,7 @@ const Footer = () => {
             <Paper square elevation={0}>
                 <Container maxWidth="md">
                     <div className={classes.footer}>
-                        <Typography
-                            color="textSecondary"
-                            style={{ verticalAlign: 'bottom' }}
-                        >
+                        <div style={{ verticalAlign: 'bottom' }}>
                             <Link to="/">
                                 <Typography
                                     color="textSecondary"
@@ -31,8 +28,7 @@ const Footer = () => {
                             <Link to="/privacy">
                                 <Typography
                                     color="textSecondary"
-                                    style={{ marginRight: 35 }}
-                                    display="inline"
+                                    className={classes.links}
                                 >
                                     Privacy
                                 </Typography>
@@ -40,8 +36,7 @@ const Footer = () => {
                             <Link to="/about">
                                 <Typography
                                     color="textSecondary"
-                                    style={{ marginRight: 35 }}
-                                    display="inline"
+                                    className={classes.links}
                                 >
                                     About
                                 </Typography>
@@ -49,19 +44,17 @@ const Footer = () => {
                             <Link to="/team">
                                 <Typography
                                     color="textSecondary"
-                                    style={{ marginRight: 35 }}
-                                    display="inline"
+                                    className={classes.links}
                                 >
                                     Team
                                 </Typography>
                             </Link>
-                        </Typography>
-                        <Typography
+                        </div>
+                        <div
                             style={{
                                 marginLeft: 'auto',
                                 display: 'inline-block',
                             }}
-                            color="textSecondary"
                         >
                             <Link to="/help">
                                 <Typography
@@ -78,7 +71,7 @@ const Footer = () => {
                                     Help
                                 </Typography>
                             </Link>
-                        </Typography>
+                        </div>
                     </div>
                 </Container>
             </Paper>

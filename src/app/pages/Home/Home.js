@@ -9,9 +9,9 @@ const Home = (props) => {
             <ToolBar
                 themeColor={props.themeColor}
                 setThemeColor={props.setThemeColor}
-                crumbs={['Dashboard']}
+                crumbs={['Home']}
             />
-            <Typography variant="h5">Pinned Apps</Typography>
+            <Typography variant="h5">Pinned Connections</Typography>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12} md={3}>
                     <PinnedCard type="Game" title="Simon" />

@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from './Dashboard.module.scss';
-import Home from '../pages/Home/Home';
+import Home from '../../pages/Home/Home';
 import { Switch, Route } from 'react-router-dom';
-import Metrics from '../pages/Metrics/Metrics';
+import Metrics from '../../pages/Metrics/Metrics';
 
 const Dashboard = (props) => {
     return (

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ToolBar from '../../components/ToolBar/ToolBar';
 import { Typography, Grid } from '@material-ui/core';
 import classes from './Metrics.module.scss';
@@ -8,6 +8,7 @@ import CounterCard from '../../components/Cards/CounterCard';
 
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import PhonelinkOutlinedIcon from '@material-ui/icons/PhonelinkOutlined';
+import StateCounterCard from '../../components/Cards/StateCounterCard';
 
 const Metrics = (props) => {
     return (
@@ -26,14 +27,8 @@ const Metrics = (props) => {
                 </Grid>
             </Grid>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
-                <Grid item xs={12} md={4}>
-                    <TemplateCard />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <TemplateCard />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <ColoredCard />
+                <Grid item xs={12} md={8}>
+                    <StateCounterCard />
                 </Grid>
             </Grid>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
@@ -52,6 +47,9 @@ const Metrics = (props) => {
                         title="Devices Connected"
                         value="8"
                     />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <ColoredCard />
                 </Grid>
             </Grid>
         </div>

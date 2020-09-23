@@ -12,7 +12,8 @@ const useStyles = makeStyles({
         height: 220,
     },
     empty: {
-        border: '2px dashed rgba(0, 0, 0, 0.12)',
+        borderWidth: 2,
+        borderStyle: 'dashed',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -49,7 +50,7 @@ const PinnedCard = ({ title, type, empty }) => {
                 className={`${classes.root} ${classes.empty}`}
                 variant="outlined"
             >
-                <FiPlusSquare fontSize="18px" />
+                <FiPlusSquare fontSize="18px" style={{ marginRight: 10 }} />
                 <Typography variant="body1" component="p">
                     Add New
                 </Typography>

@@ -36,7 +36,7 @@ const NavBar = () => {
                             </Link>
                         </li>
                     </Tooltip>
-                    <Tooltip title="Devices &amp; Apps" placement="right-end">
+                    <Tooltip title="Connections" placement="right-end">
                         <li>
                             <Link to="#" className={`text-primary`}>
                                 <FiAirplay className={classes.icon} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from './dashboard/Dashboard';
+import Dashboard from './routes/dashboard/Dashboard';
 import classes from './App.module.scss';
 import { Paper } from '@material-ui/core';
 import NavBar from './components/NavBar/NavBar';

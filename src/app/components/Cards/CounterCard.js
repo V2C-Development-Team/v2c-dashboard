@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import classes from './Cards.module.scss';
 
-const TemplateCard = (props) => {
+const CounterCard = (props) => {
     const dashed = props.dashed;
     return (
         <Card
@@ -24,4 +24,4 @@ const TemplateCard = (props) => {
     );
 };
 
-export default TemplateCard;
+export default CounterCard;

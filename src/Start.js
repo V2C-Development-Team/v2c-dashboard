@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './App.scss';
+import './Start.scss';
 import { ThemeProvider } from '@material-ui/core/styles';
 import getTheme from './utils/theme';
 import Layout from './components/Layout/Layout';
 
-const App = () => {
+const Start = () => {
     const [themeColor, setThemeColor] = useState('light');
     const handleThemeColor = () => {
         setThemeColor((themeColor) =>
@@ -24,4 +24,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Start;

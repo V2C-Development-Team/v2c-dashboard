@@ -1,0 +1,66 @@
+@import '../../../styles/abstracts/_abstracts.scss';
+
+.sidebar {
+    width: 100px;
+    height: 100%;
+    background-color: $color-light;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logoContainer {
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+
+    & > img {
+        @include img-responsive;
+    }
+}
+
+.nav {
+    width: 100%;
+    flex: 1;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    @include d-flex-center-all;
+    ul {
+        @include resetList;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        li {
+            display: block;
+            margin-top: 20px;
+            &.last {
+                margin-top: auto;
+                margin-bottom: 20px;
+            }
+            a {
+                @include d-flex-center-all;
+                width: 50px;
+                height: 50px;
+                font-size: 30px;
+                border-radius: 8px;
+                transition: background-color 0.3s;
+                &.active,
+                &:hover {
+                    background-color: rgba($color-primary, 0.15);
+                }
+                &.active .icon,
+                &:hover .icon {
+                    color: $color-primary !important;
+                }
+            }
+        }
+    }
+}
+
+.icon {
+    height: 100%;
+    color: rgba($color-primary, 0.5);
+    transition: color 0.3s;
+}

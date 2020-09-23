@@ -1,38 +1,16 @@
 import React, { Fragment } from 'react';
-import {
-    Paper,
-    Grid,
-    Typography,
-    Button,
-    Breadcrumbs,
-    Link as MLink,
-    IconButton,
-} from '@material-ui/core';
-import classes from './Home.module.scss';
-import { FiSettings } from 'react-icons/fi';
-import PinnedCard from '../../components/PinnedCard/PinnedCard';
-const Home = () => {
+import { Grid, Typography } from '@material-ui/core';
+import PinnedCard from '../../components/Cards/PinnedCard';
+import ToolBar from '../../components/ToolBar/ToolBar';
+
+const Home = (props) => {
     return (
         <Fragment>
-            <div className={classes.infoBar}>
-                <div>
-                    <Breadcrumbs aria-label="breadcrumb">
-                        {/* <MLink color="inherit" href="/">
-                            Dashboard
-                        </MLink> */}
-
-                        <Typography color="textPrimary">Dashboard</Typography>
-                    </Breadcrumbs>
-                </div>
-                <div>
-                    <IconButton style={{ marginRight: 25 }}>
-                        <FiSettings />
-                    </IconButton>
-                    <Button variant="contained" color="primary">
-                        Create task
-                    </Button>
-                </div>
-            </div>
+            <ToolBar
+                themeColor={props.themeColor}
+                setThemeColor={props.setThemeColor}
+                crumbs={['Dashboard']}
+            />
             <Typography variant="h5">Pinned Apps</Typography>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12} md={3}>

@@ -1,9 +1,5 @@
 import React from 'react';
-import Header from '../Header/Header';
 import classes from './Layout.module.scss';
-import Main from '../Main/Main';
-import Footer from '../Footer/Footer';
-import Dashboard from '../../app/dashboard/Dashboard';
 import App from '../../app/App';
 
 const Layout = (props) => {
@@ -15,7 +11,10 @@ const Layout = (props) => {
             />
             <Main />
             <Footer /> */}
-            <App />
+            <App
+                themeColor={props.themeColor}
+                setThemeColor={props.setThemeColor}
+            />
         </div>
     );
 };

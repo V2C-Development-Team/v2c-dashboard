@@ -35,6 +35,12 @@ code {
 .dark .bg-secondary {
     background-color: $color-dark;
 }
+.text-primary {
+    color: $color-darker;
+}
+.dark .text-primary {
+    color: $color-light;
+}
 
 a {
     text-decoration: none;

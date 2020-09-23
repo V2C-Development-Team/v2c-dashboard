@@ -3,7 +3,6 @@
 .sidebar {
     width: 100px;
     height: 100%;
-    background-color: $color-light;
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
@@ -35,6 +34,7 @@
         li {
             display: block;
             margin-top: 20px;
+
             &.last {
                 margin-top: auto;
                 margin-bottom: 20px;
@@ -52,7 +52,7 @@
                 }
                 &.active .icon,
                 &:hover .icon {
-                    color: $color-primary !important;
+                    opacity: 1;
                 }
             }
         }
@@ -61,6 +61,6 @@
 
 .icon {
     height: 100%;
-    color: rgba($color-primary, 0.5);
     transition: color 0.3s;
+    opacity: 0.5;
 }

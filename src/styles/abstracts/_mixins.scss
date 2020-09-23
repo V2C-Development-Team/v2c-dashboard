@@ -33,3 +33,8 @@
         @content;
     }
 }
+@mixin screen_xl() {
+    @media only screen and (max-width: 1920px) {
+        @content;
+    }
+}

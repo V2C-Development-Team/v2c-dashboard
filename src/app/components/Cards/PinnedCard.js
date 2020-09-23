@@ -3,10 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { FiZap, FiTrash } from 'react-icons/fi';
+import { FiZap, FiTrash, FiPlusSquare } from 'react-icons/fi';
 
 const useStyles = makeStyles({
     root: {
@@ -18,6 +17,7 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'pointer',
+        padding: 15,
     },
     bullet: {
         display: 'inline-block',
@@ -49,8 +49,9 @@ const PinnedCard = ({ title, type, empty }) => {
                 className={`${classes.root} ${classes.empty}`}
                 variant="outlined"
             >
+                <FiPlusSquare fontSize="18px" />
                 <Typography variant="body1" component="p">
-                    Add new App / Device
+                    Add New
                 </Typography>
             </Card>
         );

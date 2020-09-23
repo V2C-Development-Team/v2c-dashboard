@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PrimarySearchAppBar = (props) => {
+const Header = (props) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -307,4 +307,4 @@ const PrimarySearchAppBar = (props) => {
     );
 };
 
-export default PrimarySearchAppBar;
+export default Header;

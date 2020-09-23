@@ -1,6 +1,8 @@
 .dashboard {
     flex: 1;
-    margin-top: 20px;
+    padding-top: 20px;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .dashboard .main {

@@ -6,11 +6,7 @@ import ToolBar from '../../components/ToolBar/ToolBar';
 const Home = (props) => {
     return (
         <Fragment>
-            <ToolBar
-                themeColor={props.themeColor}
-                setThemeColor={props.setThemeColor}
-                crumbs={['Home']}
-            />
+            <ToolBar crumbs={['Home']} />
             <Typography variant="h5">Pinned Connections</Typography>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12} md={3}>

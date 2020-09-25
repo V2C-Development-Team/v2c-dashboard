@@ -13,11 +13,7 @@ import StateCounterCard from '../../components/Cards/StateCounterCard';
 const Metrics = (props) => {
     return (
         <div className={classes.metrics}>
-            <ToolBar
-                themeColor={props.themeColor}
-                setThemeColor={props.setThemeColor}
-                crumbs={['Metrics']}
-            />
+            <ToolBar crumbs={['Metrics']} />
             <Typography variant="h5" component="h5">
                 Some Header
             </Typography>

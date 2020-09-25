@@ -10,10 +10,7 @@ const App = (props) => {
         <div className={classes.app}>
             <Paper square elevation={0} className={classes.paper}>
                 <NavBar />
-                <Dashboard
-                    themeColor={props.themeColor}
-                    setThemeColor={props.setThemeColor}
-                />
+                <Dashboard />
                 <InfoBar />
             </Paper>
         </div>

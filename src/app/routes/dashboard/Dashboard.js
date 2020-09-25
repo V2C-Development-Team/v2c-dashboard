@@ -10,16 +10,10 @@ const Dashboard = (props) => {
             <main className={classes.main}>
                 <Switch>
                     <Route exact path="/metrics">
-                        <Metrics
-                            themeColor={props.themeColor}
-                            setThemeColor={props.setThemeColor}
-                        />
+                        <Metrics />
                     </Route>
                     <Route>
-                        <Home
-                            themeColor={props.themeColor}
-                            setThemeColor={props.setThemeColor}
-                        />
+                        <Home />
                     </Route>
                 </Switch>
             </main>

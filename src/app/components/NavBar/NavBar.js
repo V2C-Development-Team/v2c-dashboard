@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import classes from './NavBar.module.scss';
 import { AuthContext } from '../../../context/authContext';
 
@@ -17,8 +17,9 @@ import { Tooltip } from '@material-ui/core';
 import auth from '../../../whoami/auth';
 
 const NavBar = () => {
-    const [currentTab, setCurrentTab] = useState('dashboard');
     const history = useHistory();
+    const location = useLocation();
+    const currentTab = location.pathname;
     const { setIsAuthenticated } = useContext(AuthContext);
 
     return (
@@ -38,9 +39,9 @@ const NavBar = () => {
                             <Link
                                 to="/dashboard"
                                 className={`${
-                                    currentTab === 'dashboard' && classes.active
+                                    currentTab === '/dashboard' &&
+                                    classes.active
                                 } text-primary`}
-                                onClick={() => setCurrentTab('dashboard')}
                             >
                                 <FiGrid className={classes.icon} />
                             </Link>
@@ -65,9 +66,9 @@ const NavBar = () => {
                             <Link
                                 to="/dashboard/metrics"
                                 className={`${
-                                    currentTab === 'metrics' && classes.active
+                                    currentTab === '/dashboard/metrics' &&
+                                    classes.active
                                 } text-primary`}
-                                onClick={() => setCurrentTab('metrics')}
                             >
                                 <FiBarChart2 className={classes.icon} />
                             </Link>

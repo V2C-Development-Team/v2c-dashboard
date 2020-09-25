@@ -2,6 +2,8 @@ import React from 'react';
 import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import classes from './Landing.module.scss';
+import { Link } from 'react-router-dom';
+import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
 
 import logo from '../../assets/images/v2c_logo.png';
 import feat_img from '../../assets/images/feat_img.png';
@@ -32,14 +34,16 @@ const Landing = (props) => {
                 <Typography variant="h5">
                     Remote voice control for all your devices
                 </Typography>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    className={_classes.btn}
-                    size="large"
-                >
-                    Get Started with V2C
-                </Button>
+                <Link to="/register">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={_classes.btn}
+                        size="large"
+                    >
+                        Get Started with V2C
+                    </Button>
+                </Link>
                 <div className={classes.imgContainer}>
                     <img src={feat_img} alt="featured v2c dashboard" />
                 </div>
@@ -81,17 +85,19 @@ const Landing = (props) => {
                 <Typography variant="h4" className={_classes.title}>
                     Voice to Command
                 </Typography>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    style={{ marginTop: 15 }}
-                >
-                    Get Started with V2C
-                </Button>
+                <Link to="/register">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        style={{ marginTop: 15 }}
+                    >
+                        Get Started with V2C
+                    </Button>
+                </Link>
             </section>
         </Paper>
     );
 };
 
-export default Landing;
+export default withHeaderAndFooter(Landing);

@@ -1,0 +1,14 @@
+@import '../../../styles/abstracts/_abstracts.scss';
+
+.infoBar {
+    display: block;
+    width: 500px;
+    background-color: $color-light;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include screen_lg {
+        display: none;
+    }
+}

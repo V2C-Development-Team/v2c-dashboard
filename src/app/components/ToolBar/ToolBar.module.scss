@@ -1,0 +1,12 @@
+@import '../../../styles/abstracts/_mixins.scss';
+.toolBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    @include screen_sm {
+        min-height: 100px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

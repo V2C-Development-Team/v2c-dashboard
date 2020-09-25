@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
 // import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -16,6 +17,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Button, Paper } from '@material-ui/core';
 import { Brightness4, Brightness7 } from '@material-ui/icons';
+
+import { ThemeContext } from '../../context/themeContext';
+import { AuthContext } from '../../context/authContext';
 
 import logo from '../../assets/images/v2c_logo.png';
 
@@ -93,16 +97,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PrimarySearchAppBar = (props) => {
+const Header = (props) => {
     const classes = useStyles();
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [isAuthenticated] = useState(false);
+    const { themeColor, toggleThemeColor } = useContext(ThemeContext);
+    const { isAuthenticated } = useContext(AuthContext);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const themeColor = props.themeColor;
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -133,7 +137,14 @@ const PrimarySearchAppBar = (props) => {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem
+                onClick={() => {
+                    handleMenuClose();
+                    history.push('/dashboard');
+                }}
+            >
+                Dashboard
+            </MenuItem>
         </Menu>
     );
 
@@ -186,7 +197,7 @@ const PrimarySearchAppBar = (props) => {
             <Paper elevation={0} square className={classes.appBar}>
                 <AppBar position="fixed">
                     <Toolbar>
-                        {isAuthenticated && (
+                        {/*                         {isAuthenticated && (
                             <IconButton
                                 edge="start"
                                 className={classes.menuButton}
@@ -195,18 +206,26 @@ const PrimarySearchAppBar = (props) => {
                             >
                                 <MenuIcon />
                             </IconButton>
-                        )}
-                        <div className={classes.imgContainer}>
-                            <img src={logo} alt="v2c logo" />
-                        </div>
-
-                        <Typography
-                            className={classes.title}
-                            variant="h6"
-                            noWrap
+                        )} */}
+                        <Link
+                            to="/"
+                            style={{
+                                color: 'inherit',
+                                display: 'flex',
+                                alignItems: 'flex-end',
+                            }}
                         >
-                            V2C
-                        </Typography>
+                            <div className={classes.imgContainer}>
+                                <img src={logo} alt="v2c logo" />
+                            </div>
+                            <Typography
+                                className={classes.title}
+                                variant="h6"
+                                noWrap
+                            >
+                                V2C
+                            </Typography>
+                        </Link>
                         {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -224,7 +243,7 @@ const PrimarySearchAppBar = (props) => {
 
                         <IconButton
                             color="inherit"
-                            onClick={() => props.setThemeColor()}
+                            onClick={() => toggleThemeColor()}
                             className={classes.iconButton}
                         >
                             {themeColor === 'light' ? (
@@ -234,9 +253,11 @@ const PrimarySearchAppBar = (props) => {
                             )}
                         </IconButton>
                         {!isAuthenticated && (
-                            <Button variant="contained" color="secondary">
-                                Sign in
-                            </Button>
+                            <Link to="/login">
+                                <Button variant="contained" color="secondary">
+                                    Sign in
+                                </Button>
+                            </Link>
                         )}
                         {isAuthenticated && (
                             <Fragment>
@@ -290,10 +311,10 @@ const PrimarySearchAppBar = (props) => {
                     </Toolbar>
                 </AppBar>
             </Paper>
-            {isAuthenticated && { renderMobileMenu }}
-            {isAuthenticated && { renderMenu }}
+            {isAuthenticated && renderMobileMenu}
+            {isAuthenticated && renderMenu}
         </header>
     );
 };
 
-export default PrimarySearchAppBar;
+export default Header;

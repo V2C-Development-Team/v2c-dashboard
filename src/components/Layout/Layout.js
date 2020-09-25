@@ -1,19 +1,23 @@
-import React from 'react';
-import Header from '../Header/Header';
+import React, { useState } from 'react';
 import classes from './Layout.module.scss';
+// import App from '../../app/App';
+// import Header from '../Header/Header';
+// import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
-import Footer from '../Footer/Footer';
+import { AuthContext } from '../../context/authContext';
+import auth from '../../whoami/auth';
 
 const Layout = (props) => {
+    const [isAuth, setIsAuth] = useState(auth.authenticated);
     return (
-        <div className={classes.layout}>
-            <Header
-                themeColor={props.themeColor}
-                setThemeColor={props.setThemeColor}
-            />
-            <Main />
-            <Footer />
-        </div>
+        <AuthContext.Provider
+            value={{ isAuthenticated: isAuth, setIsAuthenticated: setIsAuth }}
+        >
+            <div className={classes.layout}>
+                <Main setAuthState={setIsAuth} />
+                {/* <App /> */}
+            </div>
+        </AuthContext.Provider>
     );
 };
 

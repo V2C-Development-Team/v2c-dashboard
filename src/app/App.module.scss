@@ -1,0 +1,17 @@
+@import '../styles/abstracts/_variables.scss';
+.app {
+    height: 100vh;
+    width: 100%;
+    min-width: 100vw;
+    // padding: 8px;
+    background-color: $color-primary;
+    flex: 1;
+    display: flex;
+}
+
+.paper {
+    flex: 1;
+    display: flex;
+    // border-radius: 15px;
+    // overflow: hidden;
+}

@@ -10,21 +10,31 @@
     @content;
 }
 
+@mixin resetList {
+    padding: 0;
+    list-style: none;
+}
+
 //* Breakpoints */
-@mixin small() {
+@mixin screen_sm() {
     @media only screen and (max-width: 600px) {
         @content;
     }
 }
 
-@mixin medium() {
+@mixin screen_md() {
     @media only screen and (max-width: 960px) {
         @content;
     }
 }
 
-@mixin large() {
+@mixin screen_lg() {
     @media only screen and (max-width: 1280px) {
+        @content;
+    }
+}
+@mixin screen_xl() {
+    @media only screen and (max-width: 1920px) {
         @content;
     }
 }

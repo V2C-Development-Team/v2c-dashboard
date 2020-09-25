@@ -5,7 +5,8 @@ import { checkIsNullOrUndefinedOrEmpty } from '../utils/utlis';
 
 class Auth {
     constructor() {
-        this.authenticated = false;
+        this.authenticated =
+            localStorage.getItem('stay') === 'true' ? true : false;
         this.user = null;
         this.userID = -1;
         this.email = '';
@@ -25,6 +26,10 @@ class Auth {
         this.email = user.email;
         this.user = user;
         jscookie.set('user', btoa(user.uid));
+        // for demo purposes
+        if (user.stay === true) {
+            localStorage.setItem('stay', 'true');
+        }
     }
 
     logout() {
@@ -33,6 +38,7 @@ class Auth {
         this.email = '';
         this.password = '';
         this.destroySession();
+        localStorage.removeItem('stay');
     }
 
     isAuthenticated() {

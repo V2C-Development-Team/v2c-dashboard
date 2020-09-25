@@ -1,69 +1,80 @@
 import React from 'react';
-import { Container, Typography, Link as MLink } from '@material-ui/core';
+import { Container, Typography, Paper } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import classes from './Footer.module.scss';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
         <footer>
-            <Container maxWidth="md">
-                <div className={classes.footer}>
-                    <Typography color="textSecondary">
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="textPrimary"
-                            variant="h5"
+            <Paper square elevation={0}>
+                <Container maxWidth="md">
+                    <div className={classes.footer}>
+                        <div style={{ verticalAlign: 'bottom' }}>
+                            <Link to="/">
+                                <Typography
+                                    color="textSecondary"
+                                    variant="h6"
+                                    style={{
+                                        fontFamily: 'Inter',
+                                        marginRight: 55,
+                                        fontWeight: 600,
+                                    }}
+                                    display="inline"
+                                >
+                                    V2C
+                                </Typography>
+                            </Link>
+                            <Link to="/privacy">
+                                <Typography
+                                    color="textSecondary"
+                                    className={classes.links}
+                                >
+                                    Privacy
+                                </Typography>
+                            </Link>
+                            <Link to="/about">
+                                <Typography
+                                    color="textSecondary"
+                                    className={classes.links}
+                                >
+                                    About
+                                </Typography>
+                            </Link>
+                            <Link to="/team">
+                                <Typography
+                                    color="textSecondary"
+                                    className={classes.links}
+                                >
+                                    Team
+                                </Typography>
+                            </Link>
+                        </div>
+                        <div
                             style={{
-                                fontFamily: 'Inter',
-                                marginRight: 55,
-                                fontWeight: 600,
+                                marginLeft: 'auto',
+                                display: 'inline-block',
                             }}
                         >
-                            V2C
-                        </MLink>
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="inherit"
-                            style={{ marginRight: 35 }}
-                        >
-                            Privacy
-                        </MLink>
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="inherit"
-                            style={{ marginRight: 35 }}
-                        >
-                            About
-                        </MLink>
-                        <MLink
-                            href="#"
-                            underline="none"
-                            color="inherit"
-                            style={{ marginRight: 35 }}
-                        >
-                            Team
-                        </MLink>
-                    </Typography>
-                    <Typography
-                        style={{ marginLeft: 'auto', display: 'inline-block' }}
-                        color="textSecondary"
-                    >
-                        <MLink href="#" color="inherit" underline="none">
-                            <HelpOutlineIcon
-                                color="inherit"
-                                style={{
-                                    verticalAlign: 'bottom',
-                                    marginRight: 5,
-                                }}
-                            />
-                            Help
-                        </MLink>
-                    </Typography>
-                </div>
-            </Container>
+                            <Link to="/help">
+                                <Typography
+                                    color="textSecondary"
+                                    display="inline"
+                                >
+                                    <HelpOutlineIcon
+                                        color="inherit"
+                                        style={{
+                                            verticalAlign: 'bottom',
+                                            marginRight: 5,
+                                        }}
+                                    />
+                                    Help
+                                </Typography>
+                            </Link>
+                        </div>
+                    </div>
+                </Container>
+            </Paper>
         </footer>
     );
 };

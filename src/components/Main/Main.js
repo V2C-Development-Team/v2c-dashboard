@@ -6,7 +6,7 @@ import SignIn from '../../pages/auth/SignIn';
 import SignUp from '../../pages/auth/SignUp';
 import NotFound from '../../pages/auth/NotFound';
 import ProtectedRoute from '../../hoc/ProtectedRoute';
-import Dashboard from '../../app/dashboard/Dashboard';
+import Dashboard from '../../app/routes/dashboard/Dashboard';
 import br from '../../whoami/businessRules';
 
 const Main = () => {

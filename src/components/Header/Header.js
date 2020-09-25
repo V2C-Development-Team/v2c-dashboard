@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, Fragment, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,6 +17,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Button, Paper } from '@material-ui/core';
 import { Brightness4, Brightness7 } from '@material-ui/icons';
+
+import { ThemeContext } from '../../context/themeContext';
+import { AuthContext } from '../../context/authContext';
 
 import logo from '../../assets/images/v2c_logo.png';
 
@@ -96,14 +99,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = (props) => {
     const classes = useStyles();
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [isAuthenticated] = useState(false);
+    const { themeColor, toggleThemeColor } = useContext(ThemeContext);
+    const { isAuthenticated } = useContext(AuthContext);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const themeColor = props.themeColor;
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -134,7 +137,14 @@ const Header = (props) => {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem
+                onClick={() => {
+                    handleMenuClose();
+                    history.push('/dashboard');
+                }}
+            >
+                Dashboard
+            </MenuItem>
         </Menu>
     );
 
@@ -187,7 +197,7 @@ const Header = (props) => {
             <Paper elevation={0} square className={classes.appBar}>
                 <AppBar position="fixed">
                     <Toolbar>
-                        {isAuthenticated && (
+                        {/*                         {isAuthenticated && (
                             <IconButton
                                 edge="start"
                                 className={classes.menuButton}
@@ -196,7 +206,7 @@ const Header = (props) => {
                             >
                                 <MenuIcon />
                             </IconButton>
-                        )}
+                        )} */}
                         <Link
                             to="/"
                             style={{
@@ -233,7 +243,7 @@ const Header = (props) => {
 
                         <IconButton
                             color="inherit"
-                            onClick={() => props.setThemeColor()}
+                            onClick={() => toggleThemeColor()}
                             className={classes.iconButton}
                         >
                             {themeColor === 'light' ? (
@@ -301,8 +311,8 @@ const Header = (props) => {
                     </Toolbar>
                 </AppBar>
             </Paper>
-            {isAuthenticated && { renderMobileMenu }}
-            {isAuthenticated && { renderMenu }}
+            {isAuthenticated && renderMobileMenu}
+            {isAuthenticated && renderMenu}
         </header>
     );
 };

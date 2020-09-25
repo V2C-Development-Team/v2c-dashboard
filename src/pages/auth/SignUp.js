@@ -19,6 +19,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignUp() {
+const SignUp = () => {
     const classes = useStyles();
     const { register, handleSubmit } = useForm();
     const [emailError, setEmailError] = useState({
@@ -221,4 +222,6 @@ export default function SignUp() {
             </Container>
         </Paper>
     );
-}
+};
+
+export default withHeaderAndFooter(SignUp);

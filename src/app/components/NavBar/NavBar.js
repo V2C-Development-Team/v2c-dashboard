@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import classes from './NavBar.module.scss';
+import { AuthContext } from '../../../context/authContext';
 
 import v2c_logo from '../../../assets/images/v2c_logo.png';
 import {
@@ -12,21 +14,29 @@ import {
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Tooltip } from '@material-ui/core';
+import auth from '../../../whoami/auth';
 
 const NavBar = () => {
     const [currentTab, setCurrentTab] = useState('dashboard');
+    const history = useHistory();
+    const { setIsAuthenticated } = useContext(AuthContext);
 
     return (
         <div className={`${classes.sidebar} bg-secondary `}>
-            <div className={classes.logoContainer}>
-                <img src={v2c_logo} alt="v2c logo" />
-            </div>
+            <Tooltip title="Back to main page">
+                <div
+                    className={classes.logoContainer}
+                    onClick={() => history.push('/')}
+                >
+                    <img src={v2c_logo} alt="v2c logo" />
+                </div>
+            </Tooltip>
             <nav className={classes.nav}>
                 <ul>
                     <Tooltip title="Home" placement="right-end">
                         <li>
                             <Link
-                                to="/"
+                                to="/dashboard"
                                 className={`${
                                     currentTab === 'dashboard' && classes.active
                                 } text-primary`}
@@ -53,7 +63,7 @@ const NavBar = () => {
                     <Tooltip title="Metrics" placement="right-end">
                         <li>
                             <Link
-                                to="/metrics"
+                                to="/dashboard/metrics"
                                 className={`${
                                     currentTab === 'metrics' && classes.active
                                 } text-primary`}
@@ -73,7 +83,15 @@ const NavBar = () => {
                     </Tooltip>
                     <Tooltip title="Logout" placement="right-end">
                         <li className={classes.last}>
-                            <Link to="#" className={`text-primary`}>
+                            <Link
+                                to="#"
+                                className={`text-primary`}
+                                onClick={() => {
+                                    auth.logout();
+                                    setIsAuthenticated(false);
+                                    history.push('/login');
+                                }}
+                            >
                                 <FiLogOut className={classes.icon} />
                             </Link>
                         </li>

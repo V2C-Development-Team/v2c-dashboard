@@ -3,6 +3,7 @@ import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import classes from './Landing.module.scss';
 import { Link } from 'react-router-dom';
+import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
 
 import logo from '../../assets/images/v2c_logo.png';
 import feat_img from '../../assets/images/feat_img.png';
@@ -99,4 +100,4 @@ const Landing = (props) => {
     );
 };
 
-export default Landing;
+export default withHeaderAndFooter(Landing);

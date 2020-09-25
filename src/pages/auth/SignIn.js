@@ -20,6 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import auth from '../../whoami/auth';
+import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -85,7 +86,7 @@ const SignIn = (props) => {
 
         // for demo purposes
         if (data.email === 'demo@email.com' && data.password === '2020') {
-            auth.login({});
+            auth.login({ stay: data.remember });
             props.history.push('/dashboard');
         } else {
             setEmailError({
@@ -163,7 +164,7 @@ const SignIn = (props) => {
                                     color="primary"
                                 />
                             }
-                            label="Remember my email"
+                            label="Keep me signed in"
                         />
                         <Button
                             type="submit"
@@ -197,4 +198,4 @@ const SignIn = (props) => {
     );
 };
 
-export default SignIn;
+export default withHeaderAndFooter(SignIn);

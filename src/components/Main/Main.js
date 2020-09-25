@@ -6,10 +6,10 @@ import SignIn from '../../pages/auth/SignIn';
 import SignUp from '../../pages/auth/SignUp';
 import NotFound from '../../pages/auth/NotFound';
 import ProtectedRoute from '../../hoc/ProtectedRoute';
-import Dashboard from '../../app/routes/dashboard/Dashboard';
+import App from '../../app/App';
 import br from '../../whoami/businessRules';
 
-const Main = () => {
+const Main = (props) => {
     return (
         <div className={classes.main}>
             <Switch>
@@ -20,7 +20,7 @@ const Main = () => {
                     path="/dashboard"
                     rule={br.dashboard}
                     routeTo="/login"
-                    component={Dashboard}
+                    component={App}
                 />
                 <Route component={NotFound} />
             </Switch>

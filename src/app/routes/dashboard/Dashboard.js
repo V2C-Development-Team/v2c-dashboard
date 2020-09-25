@@ -9,7 +9,7 @@ const Dashboard = (props) => {
         <div className={classes.dashboard}>
             <main className={classes.main}>
                 <Switch>
-                    <Route exact path="/metrics">
+                    <Route path="/metrics">
                         <Metrics />
                     </Route>
                     <Route>

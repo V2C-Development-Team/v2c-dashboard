@@ -19,6 +19,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import auth from '../../whoami/auth';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignIn() {
+const SignIn = (props) => {
     const classes = useStyles();
     const { register, handleSubmit } = useForm();
     const [emailError, setEmailError] = useState({
@@ -68,6 +69,7 @@ export default function SignIn() {
                 error: true,
                 errorHelper: 'Enter a valid email address',
             });
+            return;
         } else {
             setEmailError({ error: false, errorHelper: '' });
         }
@@ -76,8 +78,20 @@ export default function SignIn() {
                 error: true,
                 errorHelper: 'Password cannot be empty',
             });
+            return;
         } else {
             setPasswordError({ error: false, errorHelper: '' });
+        }
+
+        // for demo purposes
+        if (data.email === 'demo@email.com' && data.password === '2020') {
+            auth.login({});
+            props.history.push('/dashboard');
+        } else {
+            setEmailError({
+                error: true,
+                errorHelper: 'User does not exist',
+            });
         }
     };
 
@@ -149,7 +163,7 @@ export default function SignIn() {
                                     color="primary"
                                 />
                             }
-                            label="Remember me"
+                            label="Remember my email"
                         />
                         <Button
                             type="submit"
@@ -181,4 +195,6 @@ export default function SignIn() {
             </Container>
         </Paper>
     );
-}
+};
+
+export default SignIn;

@@ -13,7 +13,7 @@ const Dashboard = (props) => {
                     <Route path="/dashboard/metrics">
                         <Metrics />
                     </Route>
-                    <Route exact path="/dispatcher">
+                    <Route exact path="/dashboard/dispatcher">
                         <Dispatcher
                             themeColor={props.themeColor}
                             setThemeColor={props.setThemeColor}

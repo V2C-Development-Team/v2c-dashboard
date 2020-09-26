@@ -78,12 +78,11 @@ const NavBar = () => {
                     <Tooltip title="Dispatcher" placement="right-end">
                         <li>
                             <Link
-                                to="/dispatcher"
+                                to="/dashboard/dispatcher"
                                 className={`${
-                                    currentTab === 'dispatcher' &&
+                                    currentTab === '/dashboard/dispatcher' &&
                                     classes.active
                                 } text-primary`}
-                                onClick={() => setCurrentTab('dispatcher')}
                             >
                                 <FiCpu className={classes.icon} />
                             </Link>

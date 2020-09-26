@@ -24,9 +24,14 @@ class ApiInterface {
 
     pullLogs(cancelToken) {
         return new Promise(async (resolve, reject) => {
-            api.get('/v1/logs').then((res) => {
-                const logs = res.data.LOG;
-            });
+            api.get('/v1/log')
+                .then((res) => {
+                    const logs = res.data.LOG;
+                    resolve(logs);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
     }
 }

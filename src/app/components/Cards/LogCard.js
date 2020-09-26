@@ -12,13 +12,8 @@ const LogCard = (props) => {
             style={{ border: dashed && '2px dashed rgba(0, 0, 0, 0.12)' }}
         >
             <CardContent>
-                <Typography variant="body1" component="h2">
-                    {props.title}
-                </Typography>
-                <div className={classes.logArea}>
-                    <div className={classes.logEntry}>
-                        <Typography variant="body2">{props.value}</Typography>
-                    </div>
+                <div className={classes.logEntry}>
+                    <Typography variant="body2">{props.value}</Typography>
                 </div>
             </CardContent>
         </Card>

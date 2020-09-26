@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ApiInterface from '../../../services/apiInterface';
 import ToolBar from '../../components/ToolBar/ToolBar';
 import { Typography, Grid } from '@material-ui/core';
 import classes from './Dispatcher.module.scss';
-import TemplateCard from '../../components/Cards/TemplateCard';
-import ColoredCard from '../../components/Cards/ColoredCard';
-import CounterCard from '../../components/Cards/CounterCard';
-
-import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
-import PhonelinkOutlinedIcon from '@material-ui/icons/PhonelinkOutlined';
-import StateCounterCard from '../../components/Cards/StateCounterCard';
 
 import LogCard from '../../components/Cards/LogCard';
 import StreamCard from '../../components/Cards/StreamCard';
 
 const Dispatcher = (props) => {
+    const [logs, setLogs] = useState([]);
+
+    useEffect(async () => {
+        try {
+            let logs = await ApiInterface.pullLogs();
+            setLogs(logs);
+            console.log(JSON.stringify(logs));
+        } catch (e) {
+            console.log(e);
+        }
+    }, []);
+
     return (
         <div className={classes.dispatcher}>
             <ToolBar
@@ -26,10 +32,11 @@ const Dispatcher = (props) => {
             </Typography>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12}>
-                    <LogCard
-                        title="Dispatcher Log"
-                        value="Starting log collection..."
-                    />
+                    <div className={classes.logArea}>
+                        {logs.map((log) => (
+                            <LogCard value={`[${log.label}] ${log.message}`} />
+                        ))}
+                    </div>
                 </Grid>
             </Grid>
             <Grid container spacing={3} style={{ marginTop: 15 }}>

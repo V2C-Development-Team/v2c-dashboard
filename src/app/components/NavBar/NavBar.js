@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import classes from './NavBar.module.scss';
 import { AuthContext } from '../../../context/authContext';

@@ -94,9 +94,9 @@
 .streamArea {
     background-color: #eeeeee;
     height: 1.25em;
-    width: 80vw;
     margin-top: 10px;
     display: flex;
+    flex-wrap: wrap;
     overflow: hidden;
 }
 

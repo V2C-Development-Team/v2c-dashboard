@@ -50,7 +50,13 @@ const NavBar = () => {
                     </Tooltip>
                     <Tooltip title="Connections" placement="right-end">
                         <li>
-                            <Link to="#" className={`text-primary`}>
+                            <Link
+                                to="/dashboard/sessions"
+                                className={`${
+                                    currentTab === '/dashboard/sessions' &&
+                                    classes.active
+                                } text-primary`}
+                            >
                                 <FiAirplay className={classes.icon} />
                             </Link>
                         </li>

@@ -48,7 +48,7 @@ const NavBar = () => {
                             </Link>
                         </li>
                     </Tooltip>
-                    <Tooltip title="Connections" placement="right-end">
+                    <Tooltip title="Network" placement="right-end">
                         <li>
                             <Link
                                 to="/dashboard/sessions"

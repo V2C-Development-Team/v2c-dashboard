@@ -32,7 +32,7 @@ const Sessions = (props) => {
         <div className={classes.sessions}>
             <ToolBar crumbs={['Sessions']} />
             <Typography variant="h5" component="h5">
-                V2C Sessions
+                V2C Network
             </Typography>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12}>

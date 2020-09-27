@@ -40,7 +40,7 @@ const Dispatcher = (props) => {
                         {logs.map((log, index) => (
                             <LogCard
                                 key={index}
-                                value={`[${log.label}] ${log.message}`}
+                                value={`[${log.timestamp}: ${log.type}] ${log.label} - ${log.message}`}
                             />
                         ))}
                     </div>

@@ -8,8 +8,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ThemeContext } from './context/themeContext';
 
 const Start = () => {
-    const [themeColor, setThemeColor] = useState('light');
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const themePref = localStorage.getItem('theme');
+    const [themeColor, setThemeColor] = useState(
+        themePref || (prefersDarkMode ? 'dark' : 'light')
+    );
 
     const toggleThemeColor = () => {
         setThemeColor((themeColor) =>
@@ -21,16 +24,16 @@ const Start = () => {
         );
     };
 
-    React.createContext({ themeColor, toggleThemeColor });
-
     useEffect(() => {
         let tempThemeColor = prefersDarkMode ? 'dark' : 'light';
         const themePref = localStorage.getItem('theme');
-        if (themePref && themePref === ('dark' || 'light')) {
+        if (themePref && (themePref === 'dark' || themePref === 'light')) {
             tempThemeColor = themePref;
         }
         setThemeColor(tempThemeColor);
     }, [prefersDarkMode]);
+
+    React.createContext({ themeColor, toggleThemeColor });
 
     return (
         <ThemeProvider theme={getTheme(themeColor)}>

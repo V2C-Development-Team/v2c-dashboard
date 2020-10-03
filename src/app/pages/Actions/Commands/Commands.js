@@ -23,6 +23,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import SendIcon from '@material-ui/icons/Send';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     exec: {
         marginBottom: theme.spacing(1),
         paddingLeft: 5,
-        fontFamily: 'consolas , monospace',
+        fontFamily: '""consolas"" , monospace',
         display: 'flex',
         width: '100%',
         alignItems: 'center',
@@ -80,23 +81,8 @@ const Commands = (props) => {
         setName('');
         setDescription('');
         setExecutable('');
-    };
-
-    const handleCreateCommand = () => {
-        if (directive.trim() === '' || commands.length <= 0) {
-            setError('Enter all required fields (*)');
-            return;
-        }
-        const command = {
-            name,
-            description,
-            executables: [commands.map((cmd) => cmd.entry).join(',')],
-            directive,
-            commandEnabled,
-        };
-        props.addCommand(command);
-        resetForm();
-        handleModalClose();
+        setCommands([]);
+        setError('');
     };
 
     const handleAddCommand = () => {
@@ -132,6 +118,23 @@ const Commands = (props) => {
         tempCommands[index + 1] = temp;
 
         setCommands(tempCommands);
+    };
+
+    const handleCreateCommand = () => {
+        if (directive.trim() === '' || commands.length <= 0) {
+            setError('Enter all required fields (*)');
+            return;
+        }
+        const command = {
+            name,
+            description,
+            executables: [...[commands.map((cmd) => cmd.entry)]],
+            directive,
+            enabled: commandEnabled,
+        };
+        props.addCommand(command);
+        resetForm();
+        handleModalClose();
     };
 
     const handleToggle = (value) => () => {
@@ -170,111 +173,135 @@ const Commands = (props) => {
 
     return (
         <Fragment>
+            <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                className={classes.button}
+                startIcon={<Add />}
+                onClick={() => setCommandModalOpen(true)}
+            >
+                Add Command
+            </Button>
             <List className={classes.root}>
-                <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    className={classes.button}
-                    startIcon={<Add />}
-                    onClick={() => setCommandModalOpen(true)}
-                >
-                    Add Command
-                </Button>
-
-                {data.length > 0 ? (
-                    <Paper
-                        elevation={0}
-                        style={{ marginBottom: 10 }}
-                        className="bg-secondary"
-                    >
-                        <ListItem role={undefined} dense key={0}>
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={toggleAll}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    onClick={handleToggleAll}
-                                    indeterminate={indeterminate}
-                                />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={`Name`}
-                                primaryTypographyProps={{ variant: 'body1' }}
-                            />
-                            <ListItemSecondaryAction>
-                                <IconButton
-                                    edge="end"
-                                    aria-label="delete"
-                                    disabled={checked.length <= 0}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    </Paper>
-                ) : (
-                    <Typography style={{ textAlign: 'center' }}>
-                        No commands available
-                    </Typography>
-                )}
-                {data.map((el) => {
-                    const labelId = `checkbox-list-label-${el.cid}`;
-
-                    return (
-                        <Fragment key={el.cid}>
-                            <ListItem
-                                role={undefined}
-                                dense
-                                button
-                                onClick={handleToggle(el.cid)}
-                            >
+                <Paper variant="outlined">
+                    {data.length > 0 ? (
+                        <Paper
+                            elevation={0}
+                            style={{ marginBottom: 10 }}
+                            className="bg-secondary"
+                        >
+                            <ListItem role={undefined} dense key={0}>
                                 <ListItemIcon>
                                     <Checkbox
                                         edge="start"
-                                        checked={checked.indexOf(el.cid) !== -1}
+                                        checked={toggleAll}
                                         tabIndex={-1}
                                         disableRipple
-                                        inputProps={{
-                                            'aria-labelledby': labelId,
-                                        }}
+                                        onClick={handleToggleAll}
+                                        indeterminate={indeterminate}
                                     />
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={el.name} />
+                                <ListItemText
+                                    primary={`Name`}
+                                    primaryTypographyProps={{
+                                        variant: 'body1',
+                                    }}
+                                />
                                 <ListItemSecondaryAction>
                                     <IconButton
                                         edge="end"
-                                        aria-label="more"
-                                        aria-haspopup="true"
-                                        onClick={handleMenuClick}
+                                        aria-label="delete"
+                                        disabled={checked.length <= 0}
                                     >
-                                        <MoreVertIcon />
+                                        <DeleteIcon />
                                     </IconButton>
-                                    <Menu
-                                        id="menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleMenuClose}
-                                        elevation={1}
-                                    >
-                                        <MenuItem onClick={handleMenuClose}>
-                                            Edit
-                                        </MenuItem>
-                                        <MenuItem onClick={handleMenuClose}>
-                                            Duplicate
-                                        </MenuItem>
-                                        <MenuItem onClick={handleMenuClose}>
-                                            Delete
-                                        </MenuItem>
-                                    </Menu>
                                 </ListItemSecondaryAction>
                             </ListItem>
-                            <Divider />
-                        </Fragment>
-                    );
-                })}
+                        </Paper>
+                    ) : (
+                        <Typography style={{ textAlign: 'center' }}>
+                            No commands available
+                        </Typography>
+                    )}
+                    {data.map((el) => {
+                        const labelId = `checkbox-list-label-${el.cid}`;
+
+                        return (
+                            <Fragment key={el.cid}>
+                                <ListItem
+                                    role={undefined}
+                                    dense
+                                    button
+                                    onClick={handleToggle(el.cid)}
+                                >
+                                    <ListItemIcon>
+                                        <Checkbox
+                                            edge="start"
+                                            checked={
+                                                checked.indexOf(el.cid) !== -1
+                                            }
+                                            tabIndex={-1}
+                                            disableRipple
+                                            inputProps={{
+                                                'aria-labelledby': labelId,
+                                            }}
+                                        />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        id={labelId}
+                                        primary={el.name}
+                                        className={classes.label}
+                                    />
+                                    <Chip
+                                        label={
+                                            el.enabled ? 'enabled' : 'disabled'
+                                        }
+                                        variant="outlined"
+                                        style={{
+                                            color: el.enabled
+                                                ? 'green'
+                                                : 'tomato',
+                                            borderColor: el.enabled
+                                                ? 'green'
+                                                : 'tomato',
+                                        }}
+                                        size="small"
+                                    />
+                                    <ListItemSecondaryAction>
+                                        <IconButton
+                                            edge="end"
+                                            aria-label="more"
+                                            aria-haspopup="true"
+                                            onClick={handleMenuClick}
+                                        >
+                                            <MoreVertIcon />
+                                        </IconButton>
+                                        <Menu
+                                            id="menu"
+                                            anchorEl={anchorEl}
+                                            keepMounted
+                                            open={Boolean(anchorEl)}
+                                            onClose={handleMenuClose}
+                                            elevation={1}
+                                        >
+                                            <MenuItem onClick={handleMenuClose}>
+                                                Edit
+                                            </MenuItem>
+                                            <MenuItem onClick={handleMenuClose}>
+                                                Duplicate
+                                            </MenuItem>
+                                            <MenuItem onClick={handleMenuClose}>
+                                                Delete
+                                            </MenuItem>
+                                        </Menu>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                                <Divider />
+                            </Fragment>
+                        );
+                    })}
+                </Paper>
             </List>
             <Dialog
                 open={commandModalOpen}
@@ -352,7 +379,7 @@ const Commands = (props) => {
                             helperText="Enter valid command-line executables in sequence"
                             placeholder="start chrome"
                             required
-                            style={{ fontFamily: 'consolas, monospace' }}
+                            style={{ fontFamily: '"consolas", monospace' }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">

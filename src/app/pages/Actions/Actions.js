@@ -9,6 +9,7 @@ import ToolBar from '../../components/ToolBar/ToolBar';
 import { Typography, Grid, Divider } from '@material-ui/core';
 import classes from './Actions.module.scss';
 import Commands from './Commands/Commands';
+import ActionsRaw from './ActionsRaw/ActionsRaw';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -76,7 +77,7 @@ const Actions = (props) => {
                 With actions, you can create custom commands and macros that are
                 triggered via voice.
             </Typography>
-            <Grid container spacing={3} style={{ marginTop: 15 }}>
+            <Grid container style={{ marginTop: 15 }}>
                 <Grid item xs={12}>
                     <div className={_classes.root}>
                         <AppBar position="static" color="inherit" elevation={0}>
@@ -103,7 +104,7 @@ const Actions = (props) => {
                             Macros
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            txt
+                            <ActionsRaw data={{ commands }} />
                         </TabPanel>
                     </div>
                 </Grid>

@@ -109,15 +109,21 @@ const Actions = (props) => {
                         </AppBar>
                         <TabPanel value={value} index={0}>
                             <Commands
-                                data={commands}
+                                data={actions.commands || []}
                                 addCommand={handleAddCommand}
                             />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <Macros data={macros} addMacro={handleAddMacros} />
+                            <Macros
+                                data={actions.macros || []}
+                                addMacro={handleAddMacros}
+                            />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            <ActionsRaw data={actions} />
+                            <ActionsRaw
+                                data={actions}
+                                updateActions={setActions}
+                            />
                         </TabPanel>
                     </div>
                 </Grid>

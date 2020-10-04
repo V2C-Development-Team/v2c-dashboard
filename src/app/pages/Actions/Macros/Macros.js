@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     exec: {
         marginBottom: theme.spacing(1),
         paddingLeft: 5,
-        fontFamily: '""consolas"" , monospace',
+        fontFamily: '"consolas" , monospace',
         display: 'flex',
         width: '100%',
         alignItems: 'center',
@@ -347,7 +347,7 @@ const Macros = (props) => {
                             variant="outlined"
                             color="secondary"
                             helperText="Trigger phrase"
-                            placeholder="Open Browser"
+                            placeholder="Copy"
                             required
                         />
                         <TextField
@@ -359,7 +359,7 @@ const Macros = (props) => {
                             variant="outlined"
                             color="secondary"
                             helperText="The name of the macro"
-                            placeholder="Open Google Chrome browser"
+                            placeholder="Copy text"
                         />
                         <TextField
                             type="text"
@@ -370,7 +370,7 @@ const Macros = (props) => {
                             variant="outlined"
                             color="secondary"
                             helperText="The description of the macro"
-                            placeholder="Opens Chrome browser"
+                            placeholder="Copy selected text"
                             multiline
                             rows={2}
                         />
@@ -399,7 +399,7 @@ const Macros = (props) => {
                             variant="outlined"
                             color="secondary"
                             helperText="Enter a single key or modifier(ctrl, alt, shift) + key for combo"
-                            placeholder="start chrome"
+                            placeholder="CTRL + C"
                             required
                             style={{ fontFamily: '"consolas", monospace' }}
                         />

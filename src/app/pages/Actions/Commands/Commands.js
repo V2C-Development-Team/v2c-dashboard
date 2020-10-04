@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     exec: {
         marginBottom: theme.spacing(1),
         paddingLeft: 5,
-        fontFamily: '""consolas"" , monospace',
+        fontFamily: '"consolas" , monospace',
         display: 'flex',
         width: '100%',
         alignItems: 'center',

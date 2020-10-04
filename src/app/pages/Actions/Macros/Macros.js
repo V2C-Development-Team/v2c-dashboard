@@ -19,11 +19,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import SendIcon from '@material-ui/icons/Send';
 import Chip from '@material-ui/core/Chip';
+import VKMap from '../../../../utils/VKMap.json';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,22 +50,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Commands = (props) => {
+const Macros = (props) => {
     const classes = useStyles();
     const data = props.data || [];
     const [error, setError] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
-    const [commandModalOpen, setCommandModalOpen] = useState(false);
+    const [macroModalOpen, setMacroModalOpen] = useState(false);
     const [checked, setChecked] = useState([0]);
     const [toggleAll, setToggleAll] = useState(false);
     const [indeterminate, setIndeterminate] = useState(false);
     const [directive, setDirective] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [executable, setExecutable] = useState('');
-    const [commandEnabled, setCommandEnabled] = useState(true);
-    const [xid, setXid] = useState(0);
-    const [executables, setExecutables] = useState([]);
+    const [keystroke, setKeystroke] = useState('');
+    const [macroEnabled, setMacroEnabled] = useState(true);
+    const [kid, setKid] = useState(0);
+    const [keystrokes, setKeystrokes] = useState([]);
+    const [VKKeystrokes, setVKKeystrokes] = useState([]);
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -80,60 +80,83 @@ const Commands = (props) => {
         setDirective('');
         setName('');
         setDescription('');
-        setExecutable('');
-        setCommandEnabled(true);
-        setExecutables([]);
+        setKeystroke('');
+        setMacroEnabled(true);
+        setKeystrokes([]);
         setError('');
     };
 
-    const handleAddExecutable = () => {
-        const entry = executable.trim();
+    const getVKValue = (entry) => {
+        const values = entry.split('+');
+        const VKValues = [];
+        for (const value of values) {
+            VKValues.push(VKMap[value]);
+        }
+        return VKValues.join(',');
+    };
+
+    const handleAddKeystrokes = (e) => {
+        e.preventDefault();
+        let modifier = '';
+        modifier += e.altKey ? 'Alt+' : '';
+        modifier += e.ctrlKey ? 'Control+' : '';
+        modifier += e.shiftKey ? 'Shift+' : '';
+        const entry = (modifier + e.key.toUpperCase()).trim();
         if (entry === '') return;
-        setExecutables((exec) => [...exec, { xid, entry }]);
-        setExecutable('');
-        setXid((xid) => xid + 1);
-    };
-    const handleDeleteExecutable = (xid) => {
-        const tempExecutables = executables.filter((exec) => exec.xid !== xid);
-        setExecutables(tempExecutables);
+        if (e.key === 'Control' || e.key === 'Shift' || e.key === 'Alt') return; // prevent entries with only modifier keys
+        const VKValue = getVKValue(entry);
+        setKeystrokes((ks) => [...ks, { kid, entry }]);
+        setVKKeystrokes((ks) => [...ks, { kid, VKValue }]);
+        setKeystroke(entry);
+        setKid((kid) => kid + 1);
     };
 
-    const handleMoveExecutableUp = (xid) => {
-        const index = executables.findIndex((element) => element.xid === xid);
+    const handleKeystrokeDown = (e) => {
+        e.preventDefault();
+        if (e.altKey || e.ctrlKey || e.shiftKey) return false;
+    };
+
+    const handleDeleteKeystroke = (kid) => {
+        const tempKeystrokes = keystrokes.filter((ks) => ks.kid !== kid);
+        setKeystrokes(tempKeystrokes);
+    };
+
+    const handleMoveKeystrokeUp = (kid) => {
+        const index = keystrokes.findIndex((element) => element.kid === kid);
         // swap
-        const tempExecutables = [...executables];
+        const tempKeystrokes = [...keystrokes];
         if (index === 0) return;
-        const temp = tempExecutables[index];
-        tempExecutables[index] = tempExecutables[index - 1];
-        tempExecutables[index - 1] = temp;
+        const temp = tempKeystrokes[index];
+        tempKeystrokes[index] = tempKeystrokes[index - 1];
+        tempKeystrokes[index - 1] = temp;
 
-        setExecutables(tempExecutables);
+        setKeystrokes(tempKeystrokes);
     };
-    const handleMoveExecutableDown = (xid) => {
-        const index = executables.findIndex((element) => element.xid === xid);
+    const handleMoveKeystrokeDown = (kid) => {
+        const index = keystrokes.findIndex((element) => element.kid === kid);
         // swap
-        const tempExecutables = [...executables];
-        if (index === tempExecutables.length - 1) return;
-        const temp = tempExecutables[index];
-        tempExecutables[index] = tempExecutables[index + 1];
-        tempExecutables[index + 1] = temp;
+        const tempKeystrokes = [...keystrokes];
+        if (index === tempKeystrokes.length - 1) return;
+        const temp = tempKeystrokes[index];
+        tempKeystrokes[index] = tempKeystrokes[index + 1];
+        tempKeystrokes[index + 1] = temp;
 
-        setExecutables(tempExecutables);
+        setKeystrokes(tempKeystrokes);
     };
 
-    const handleCreateCommand = () => {
-        if (directive.trim() === '' || executables.length <= 0) {
+    const handleCreateMacro = () => {
+        if (directive.trim() === '' || keystrokes.length <= 0) {
             setError('Enter all required fields (*)');
             return;
         }
-        const command = {
+        const macro = {
             name,
             description,
-            executables: [...[executables.map((cmd) => cmd.entry)]],
+            keypresses: [...[VKKeystrokes.map((ks) => ks.VKValue)]],
             directive,
-            enabled: commandEnabled,
+            enabled: macroEnabled,
         };
-        props.addCommand(command);
+        props.addMacro(macro);
         resetForm();
         handleModalClose();
     };
@@ -166,11 +189,11 @@ const Commands = (props) => {
     };
 
     const handleModalClose = () => {
-        setCommandModalOpen(false);
+        setMacroModalOpen(false);
     };
 
     useEffect(() => {
-        toggleAll ? setChecked(data.map((d) => d.cid)) : setChecked([]);
+        toggleAll ? setChecked(data.map((d) => d.mid)) : setChecked([]);
     }, [toggleAll, data]);
 
     return (
@@ -181,9 +204,9 @@ const Commands = (props) => {
                 color="secondary"
                 className={classes.button}
                 startIcon={<Add />}
-                onClick={() => setCommandModalOpen(true)}
+                onClick={() => setMacroModalOpen(true)}
             >
-                Add Command
+                Add Macro
             </Button>
             <List className={classes.root}>
                 <Paper variant="outlined">
@@ -223,25 +246,25 @@ const Commands = (props) => {
                         </Paper>
                     ) : (
                         <Typography style={{ textAlign: 'center', margin: 15 }}>
-                            No commands available
+                            No macros available
                         </Typography>
                     )}
                     {data.map((el) => {
-                        const labelId = `checkbox-list-label-${el.cid}`;
+                        const labelId = `checkbox-list-label-${el.mid}`;
 
                         return (
-                            <Fragment key={el.cid}>
+                            <Fragment key={el.mid}>
                                 <ListItem
                                     role={undefined}
                                     dense
                                     button
-                                    onClick={handleToggle(el.cid)}
+                                    onClick={handleToggle(el.mid)}
                                 >
                                     <ListItemIcon>
                                         <Checkbox
                                             edge="start"
                                             checked={
-                                                checked.indexOf(el.cid) !== -1
+                                                checked.indexOf(el.mid) !== -1
                                             }
                                             tabIndex={-1}
                                             disableRipple
@@ -306,15 +329,13 @@ const Commands = (props) => {
                 </Paper>
             </List>
             <Dialog
-                open={commandModalOpen}
+                open={macroModalOpen}
                 onClose={handleModalClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 disableBackdropClick
             >
-                <DialogTitle id="alert-dialog-title">
-                    {'Add Command'}
-                </DialogTitle>
+                <DialogTitle id="alert-dialog-title">{'Add Macro'}</DialogTitle>
                 <DialogContent style={{ width: 500, maxWidth: '100%' }}>
                     <div className={classes.form}>
                         <TextField
@@ -337,7 +358,7 @@ const Commands = (props) => {
                             size="small"
                             variant="outlined"
                             color="secondary"
-                            helperText="The name of the command"
+                            helperText="The name of the macro"
                             placeholder="Open Google Chrome browser"
                         />
                         <TextField
@@ -348,7 +369,7 @@ const Commands = (props) => {
                             size="small"
                             variant="outlined"
                             color="secondary"
-                            helperText="The description of the command"
+                            helperText="The description of the macro"
                             placeholder="Opens Chrome browser"
                             multiline
                             rows={2}
@@ -357,68 +378,55 @@ const Commands = (props) => {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={commandEnabled}
+                                    checked={macroEnabled}
                                     onChange={() =>
-                                        setCommandEnabled((enabled) => !enabled)
+                                        setMacroEnabled((enabled) => !enabled)
                                     }
                                     name="checkedB"
                                     color="secondary"
                                 />
                             }
-                            label="Enable Command"
+                            label="Enable Macro"
                         />
                         <TextField
                             type="text"
-                            label="Executables"
-                            value={executable}
-                            onChange={(e) => setExecutable(e.target.value)}
-                            onKeyDown={(e) =>
-                                e.key === 'Enter' && handleAddExecutable()
-                            }
+                            label="keystroke"
+                            value={keystroke}
+                            // onChange={(e) => setKeystroke(e.target.value)}
+                            onKeyUp={handleAddKeystrokes}
+                            onKeyDown={handleKeystrokeDown}
                             size="small"
                             variant="outlined"
                             color="secondary"
-                            helperText="Enter valid command-line executables in sequence"
+                            helperText="Enter a single key or modifier(ctrl, alt, shift) + key for combo"
                             placeholder="start chrome"
                             required
                             style={{ fontFamily: '"consolas", monospace' }}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={handleAddExecutable}
-                                            edge="end"
-                                        >
-                                            <SendIcon />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
                         />
                     </div>
-                    {executables.map((exec) => (
-                        <Paper className={classes.exec} key={exec.xid}>
+                    {keystrokes.map((ks) => (
+                        <Paper className={classes.exec} key={ks.kid}>
                             <Typography style={{ flex: 1 }}>
-                                {exec.entry}
+                                {ks.entry}
                             </Typography>
                             <div>
                                 <IconButton
                                     onClick={() =>
-                                        handleMoveExecutableUp(exec.xid)
+                                        handleMoveKeystrokeUp(ks.kid)
                                     }
                                 >
                                     <ArrowUpwardIcon />
                                 </IconButton>
                                 <IconButton
                                     onClick={() =>
-                                        handleMoveExecutableDown(exec.xid)
+                                        handleMoveKeystrokeDown(ks.kid)
                                     }
                                 >
                                     <ArrowDownwardIcon />
                                 </IconButton>
                                 <IconButton
                                     onClick={() =>
-                                        handleDeleteExecutable(exec.xid)
+                                        handleDeleteKeystroke(ks.kid)
                                     }
                                 >
                                     <DeleteIcon />
@@ -434,7 +442,7 @@ const Commands = (props) => {
                         Cancel
                     </Button>
                     <Button
-                        onClick={handleCreateCommand}
+                        onClick={handleCreateMacro}
                         variant="contained"
                         color="secondary"
                         autoFocus
@@ -447,4 +455,4 @@ const Commands = (props) => {
     );
 };
 
-export default Commands;
+export default Macros;

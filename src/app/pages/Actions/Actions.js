@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,7 @@ import ToolBar from '../../components/ToolBar/ToolBar';
 import { Typography, Grid, Divider } from '@material-ui/core';
 import classes from './Actions.module.scss';
 import Commands from './Commands/Commands';
+import Macros from './Macros/Macros';
 import ActionsRaw from './ActionsRaw/ActionsRaw';
 
 function TabPanel(props) {
@@ -51,7 +52,10 @@ const Actions = (props) => {
     const _classes = useStyles();
     const [value, setValue] = useState(0);
     const [cid, setCid] = useState(0);
+    const [mid, setMid] = useState(0);
     const [commands, setCommands] = useState([]);
+    const [macros, setMacros] = useState([]);
+    const [actions, setActions] = useState({});
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -62,6 +66,15 @@ const Actions = (props) => {
         setCommands([command, ...commands]);
         setCid((cid) => cid + 1);
     };
+    const handleAddMacros = (macro) => {
+        macro.mid = mid;
+        setMacros([macro, ...macros]);
+        setMid((mid) => mid + 1);
+    };
+
+    useEffect(() => {
+        setActions({ commands, macros });
+    }, [commands, macros]);
 
     return (
         <div className={classes.sessions}>
@@ -101,10 +114,10 @@ const Actions = (props) => {
                             />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            Macros
+                            <Macros data={macros} addMacro={handleAddMacros} />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            <ActionsRaw data={{ commands }} />
+                            <ActionsRaw data={actions} />
                         </TabPanel>
                     </div>
                 </Grid>

@@ -6,11 +6,9 @@ import Start from './Start';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Router>
-            <Start />
-        </Router>
-    </React.StrictMode>,
+    <Router>
+        <Start />
+    </Router>,
     document.getElementById('root')
 );
 

@@ -4,7 +4,7 @@ import socket, { stateEnum } from '../services/websocket';
 const conn = {};
 
 export const useWebsocket = ({
-    subscriber,
+    subscription,
     subscribe = true,
     allowBroadcast = false,
     allowVerbose = false,
@@ -25,7 +25,7 @@ export const useWebsocket = ({
                 (allowBroadcast &&
                     isSubscribed === true &&
                     !payload.recipient) ||
-                (payload.recipient === subscriber && isSubscribed === true)
+                (payload.recipient === subscription && isSubscribed === true)
             ) {
                 setMessages((messages) => [
                     ...messages,
@@ -33,7 +33,7 @@ export const useWebsocket = ({
                 ]);
             }
         },
-        [isSubscribed, allowBroadcast, allowVerbose, subscriber]
+        [isSubscribed, allowBroadcast, allowVerbose, subscription]
     );
 
     conn.dispatch = (message, recipient = '', machine = '') => {

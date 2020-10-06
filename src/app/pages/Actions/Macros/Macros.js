@@ -101,13 +101,14 @@ const Macros = (props) => {
         modifier += e.altKey ? 'Alt+' : '';
         modifier += e.ctrlKey ? 'Control+' : '';
         modifier += e.shiftKey ? 'Shift+' : '';
-        const entry = (modifier + e.key.toUpperCase()).trim();
+        let entry = modifier + e.key;
+        if (entry === ' ') entry = 'Space';
         if (entry === '') return;
         if (e.key === 'Control' || e.key === 'Shift' || e.key === 'Alt') return; // prevent entries with only modifier keys
         const VKValue = getVKValue(entry);
-        setKeystrokes((ks) => [...ks, { kid, entry }]);
+        setKeystrokes((ks) => [...ks, { kid, entry: entry.toUpperCase() }]);
         setVKKeystrokes((ks) => [...ks, { kid, VKValue }]);
-        setKeystroke(entry);
+        setKeystroke(entry.toUpperCase());
         setKid((kid) => kid + 1);
     };
 
@@ -170,7 +171,6 @@ const Macros = (props) => {
         } else {
             newChecked.splice(currentIndex, 1);
         }
-        console.log(newChecked);
 
         if (newChecked.length === data.length) {
             setIndeterminate(false);

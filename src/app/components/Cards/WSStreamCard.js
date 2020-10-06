@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -10,21 +10,13 @@ const WSStreamCard = (props) => {
     const name = props.title;
     const [message, setMessage] = useState('');
     const [to, setTo] = useState('');
-    const [isSubscribed, setIsSubscribed] = useState(true);
-    const [messages, conn] = useWebsocket({
-        subscriber: name,
-        allowVerbose: props.allowVerbose,
-        allowBroadcast: props.allowBroadcast,
-    });
 
+    const [messages, conn] = useWebsocket({
+        subscription: name,
+    });
     const handleSendMessage = () => {
         conn.dispatch({ message }, to);
     };
-
-    useEffect(() => {
-        if (isSubscribed === true) conn.subscribe();
-        else conn.unsubscribe();
-    }, [conn, isSubscribed]);
 
     return (
         <Card
@@ -37,30 +29,6 @@ const WSStreamCard = (props) => {
                     Subscribe to messages for: {name}
                 </Typography>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={isSubscribed}
-                            onChange={() => setIsSubscribed((s) => !s)}
-                        />
-                        subscribe (accept messages sent to recipient: String)
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            defaultChecked={props.allowVerbose}
-                            // onChange={() => setAllowVerbose((v) => !v)}
-                        />
-                        allowVerbose (accept all activity on the network : JSON)
-                    </label>
-                    <label>
-                        <input
-                            type="checkbox"
-                            defaultChecked={props.allowBroadcast}
-                            // onChange={() => setAllowBroadcast((b) => !b)}
-                        />
-                        allowBroadcast (accept broadcast messages : String)
-                    </label>
                     <label>
                         message:
                         <input

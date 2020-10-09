@@ -61,9 +61,15 @@ const NavBar = () => {
                             </Link>
                         </li>
                     </Tooltip>
-                    <Tooltip title="Commands" placement="right-end">
+                    <Tooltip title="Actions" placement="right-end">
                         <li>
-                            <Link to="#" className={`text-primary`}>
+                            <Link
+                                to="/dashboard/actions"
+                                className={`${
+                                    currentTab === '/dashboard/actions' &&
+                                    classes.active
+                                } text-primary`}
+                            >
                                 <FiGitPullRequest className={classes.icon} />
                             </Link>
                         </li>

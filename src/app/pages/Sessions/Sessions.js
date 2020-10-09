@@ -5,7 +5,6 @@ import { Typography, Grid } from '@material-ui/core';
 import classes from './Sessions.module.scss';
 
 import LogCard from '../../components/Cards/LogCard';
-import StreamCard from '../../components/Cards/StreamCard';
 
 const cancelSource = ApiInterface.CancelToken.source();
 const Sessions = (props) => {

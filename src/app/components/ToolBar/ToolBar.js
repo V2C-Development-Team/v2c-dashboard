@@ -22,7 +22,7 @@ const ToolBar = (props) => {
         <div className={classes.toolBar}>
             <div>
                 <Breadcrumbs aria-label="breadcrumb">
-                    <MLink color="inherit" href="/">
+                    <MLink color="inherit" href="/dashboard">
                         Dashboard
                     </MLink>
 

@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     },
 });
 
-const PinnedCard = ({ title, type, empty }) => {
+const PinnedCard = ({ title, type, empty, onConnect, onDelete }) => {
     const classes = useStyles();
 
     if (empty) {
@@ -79,7 +79,7 @@ const PinnedCard = ({ title, type, empty }) => {
             </CardContent>
             <CardActions>
                 <Tooltip title="Connect">
-                    <IconButton>
+                    <IconButton onClick={onConnect ? onConnect : null}>
                         <FiZap fontSize="18px" />
                     </IconButton>
                 </Tooltip>

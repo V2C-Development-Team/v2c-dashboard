@@ -11,6 +11,7 @@ import {
     FiBell,
     FiLogOut,
     FiGitPullRequest,
+    FiCpu,
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Tooltip } from '@material-ui/core';
@@ -74,7 +75,19 @@ const NavBar = () => {
                             </Link>
                         </li>
                     </Tooltip>
-
+                    <Tooltip title="Dispatcher" placement="right-end">
+                        <li>
+                            <Link
+                                to="/dashboard/dispatcher"
+                                className={`${
+                                    currentTab === '/dashboard/dispatcher' &&
+                                    classes.active
+                                } text-primary`}
+                            >
+                                <FiCpu className={classes.icon} />
+                            </Link>
+                        </li>
+                    </Tooltip>
                     <Tooltip title="Notifications" placement="right-end">
                         <li>
                             <Link to="#" className={`text-primary`}>

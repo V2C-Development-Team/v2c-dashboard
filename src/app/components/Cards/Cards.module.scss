@@ -79,3 +79,28 @@
         }
     }
 }
+
+.logArea {
+    background-color: #eeeeee;
+    height: 200px;
+    margin-top: 10px;
+    overflow-y: auto;
+}
+
+.logEntry {
+    display: block;
+}
+
+.streamArea {
+    background-color: #eeeeee;
+    height: 1.25em;
+    width: 80vw;
+    margin-top: 10px;
+    display: flex;
+    overflow: hidden;
+}
+
+.streamEntry {
+    display: block;
+    margin-right: 5px;
+}

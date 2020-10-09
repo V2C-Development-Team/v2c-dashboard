@@ -2,8 +2,6 @@ import React from 'react';
 import ToolBar from '../../components/ToolBar/ToolBar';
 import { Typography, Grid } from '@material-ui/core';
 import classes from './Metrics.module.scss';
-import TemplateCard from '../../components/Cards/TemplateCard';
-import ColoredCard from '../../components/Cards/ColoredCard';
 import CounterCard from '../../components/Cards/CounterCard';
 
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
@@ -17,16 +15,6 @@ const Metrics = (props) => {
             <Typography variant="h5" component="h5">
                 Some Header
             </Typography>
-            <Grid container spacing={3} style={{ marginTop: 15 }}>
-                <Grid item xs={12}>
-                    <TemplateCard />
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} style={{ marginTop: 15 }}>
-                <Grid item xs={12} md={8}>
-                    <StateCounterCard />
-                </Grid>
-            </Grid>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12} md={4}>
                     <CounterCard
@@ -44,8 +32,10 @@ const Metrics = (props) => {
                         value="8"
                     />
                 </Grid>
-                <Grid item xs={12} md={4}>
-                    <ColoredCard />
+                <Grid container spacing={3} style={{ marginTop: 15 }}>
+                    <Grid item xs={12} md={8}>
+                        <StateCounterCard />
+                    </Grid>
                 </Grid>
             </Grid>
         </div>

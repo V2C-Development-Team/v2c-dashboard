@@ -35,3 +35,9 @@
 .imgContainer img {
     @include img-responsive;
 }
+
+br {
+    @include screen_sm {
+        display: inline-block;
+    }
+}

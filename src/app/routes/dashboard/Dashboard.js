@@ -4,7 +4,7 @@ import Home from '../../pages/Home/Home';
 import { Switch, Route } from 'react-router-dom';
 import Metrics from '../../pages/Metrics/Metrics';
 import Dispatcher from '../../pages/Dispatcher/Dispatcher';
-import Sessions from '../../pages/Sessions/Sessions';
+import Network from '../../pages/Network/Network';
 import Actions from '../../pages/Actions/Actions';
 
 const Dashboard = (props) => {
@@ -20,8 +20,8 @@ const Dashboard = (props) => {
                     />
                     <Route
                         exact
-                        path="/dashboard/sessions"
-                        component={Sessions}
+                        path="/dashboard/network"
+                        component={Network}
                     />
                     <Route
                         exact

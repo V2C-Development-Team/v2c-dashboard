@@ -50,7 +50,7 @@ const Landing = (props) => {
                 <Typography variant="h4">Now you're talking</Typography>
                 <Typography variant="body1" style={{ marginTop: 10 }}>
                     Open Applications and execute common tasks on your desktop
-                    <br /> using your voice.
+                    <br /> with voice commands.
                 </Typography>
             </section>
             <section className={`${classes.section} bg-secondary`}>

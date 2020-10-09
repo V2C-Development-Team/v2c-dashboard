@@ -57,7 +57,7 @@
     "x": "VK_X",
     "y": "VK_Y",
     "z": "VK_Z",
-    "Windows": 91,
+    "Meta": "VK_META",
     "Right Click": 93,
     "Numpad 0": 96,
     "Numpad 1": 97,

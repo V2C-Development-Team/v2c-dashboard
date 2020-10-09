@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ApiInterface from '../../../services/apiInterface';
 import ToolBar from '../../components/ToolBar/ToolBar';
 import { Typography, Grid } from '@material-ui/core';
-import classes from './Sessions.module.scss';
+import classes from './Network.module.scss';
 
 import LogCard from '../../components/Cards/LogCard';
 
 const cancelSource = ApiInterface.CancelToken.source();
-const Sessions = (props) => {
+const Network = (props) => {
     const [sessions, setSessions] = useState([]);
 
     const fetchSessions = useCallback(async () => {
@@ -46,4 +46,4 @@ const Sessions = (props) => {
     );
 };
 
-export default Sessions;
+export default Network;

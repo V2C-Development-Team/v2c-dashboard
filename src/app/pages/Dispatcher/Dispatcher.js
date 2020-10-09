@@ -14,7 +14,7 @@ const Dispatcher = (props) => {
     const fetchLogs = useCallback(async () => {
         try {
             let logs = await ApiInterface.pullLogs(cancelSource.token);
-            setLogs(logs);
+            setLogs(logs || []);
             console.log(JSON.stringify(logs));
         } catch (e) {
             console.log(e);

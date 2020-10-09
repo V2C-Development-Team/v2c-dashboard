@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +11,7 @@ import classes from './Actions.module.scss';
 import Commands from './Commands/Commands';
 import Macros from './Macros/Macros';
 import ActionsRaw from './ActionsRaw/ActionsRaw';
+import { useWebsocket } from '../../../hooks/useWebsocket';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -50,12 +51,15 @@ function a11yProps(index) {
 
 const Actions = (props) => {
     const _classes = useStyles();
+    const DEVICE_NAME = 'DESKTOP_CONTROLLER';
     const [value, setValue] = useState(0);
     const [cid, setCid] = useState(0);
     const [mid, setMid] = useState(0);
     const [commands, setCommands] = useState([]);
     const [macros, setMacros] = useState([]);
     const [actions, setActions] = useState({});
+    // eslint-disable-next-line no-unused-vars
+    const [messages, conn] = useWebsocket({ subscription: DEVICE_NAME });
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -72,9 +76,17 @@ const Actions = (props) => {
         setMid((mid) => mid + 1);
     };
 
+    const updateConfig = useCallback(() => {
+        conn.config(actions, DEVICE_NAME);
+    }, [actions, conn]);
+
     useEffect(() => {
         setActions({ commands, macros });
     }, [commands, macros]);
+
+    useEffect(() => {
+        updateConfig();
+    }, [actions, updateConfig]);
 
     return (
         <div className={classes.sessions}>

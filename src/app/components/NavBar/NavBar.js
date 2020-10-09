@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import classes from './NavBar.module.scss';
 import { AuthContext } from '../../../context/authContext';
@@ -48,9 +48,15 @@ const NavBar = () => {
                             </Link>
                         </li>
                     </Tooltip>
-                    <Tooltip title="Connections" placement="right-end">
+                    <Tooltip title="Network" placement="right-end">
                         <li>
-                            <Link to="#" className={`text-primary`}>
+                            <Link
+                                to="/dashboard/sessions"
+                                className={`${
+                                    currentTab === '/dashboard/sessions' &&
+                                    classes.active
+                                } text-primary`}
+                            >
                                 <FiAirplay className={classes.icon} />
                             </Link>
                         </li>

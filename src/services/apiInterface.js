@@ -34,6 +34,19 @@ class ApiInterface {
                 });
         });
     }
+
+    pullSessions(cancelToken) {
+        return new Promise(async (resolve, reject) => {
+            api.get('/v1/registeredsessions')
+                .then((res) => {
+                    const sessions = res.data['Connected Applications'];
+                    resolve(sessions);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
 }
 
 export default new ApiInterface();

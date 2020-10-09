@@ -13,6 +13,8 @@ const WSStreamCard = (props) => {
 
     const [messages, conn] = useWebsocket({
         subscription: name,
+        allowBroadcast: true,
+        allowVerbose: true,
     });
     const handleSendMessage = () => {
         conn.dispatch({ message }, to);

@@ -10,7 +10,10 @@ const PercentageCircleCard = (props) => {
     return (
         <Card
             variant="outlined"
-            style={{ border: dashed && '2px dashed rgba(0, 0, 0, 0.12)' }}
+            style={{
+                border: dashed && '2px dashed rgba(0, 0, 0, 0.12)',
+                width: '100%',
+            }}
         >
             <CardContent>
                 <Typography variant="h5" component="h2">

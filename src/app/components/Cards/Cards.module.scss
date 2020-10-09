@@ -70,7 +70,7 @@
         clip: rect(0em, 1em, 1em, 0.5em);
         & .bar {
             position: absolute;
-            border: 0.14em solid #307bbb;
+            border: 0.14em solid #502b79;
             width: 0.72em;
             height: 0.72em;
             clip: rect(0em, 0.5em, 1em, 0em);
@@ -79,7 +79,9 @@
         }
     }
 }
-
+.dark > .pCircle:after {
+    background-color: #000 !important;
+}
 .logArea {
     background-color: #eeeeee;
     height: 200px;

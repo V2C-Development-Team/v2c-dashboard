@@ -51,9 +51,9 @@ const NavBar = () => {
                     <Tooltip title="Network" placement="right-end">
                         <li>
                             <Link
-                                to="/dashboard/sessions"
+                                to="/dashboard/network"
                                 className={`${
-                                    currentTab === '/dashboard/sessions' &&
+                                    currentTab === '/dashboard/network' &&
                                     classes.active
                                 } text-primary`}
                             >

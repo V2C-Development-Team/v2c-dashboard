@@ -52,11 +52,7 @@ const SignUp = () => {
         error: false,
         errorHelper: '',
     });
-    const [fNameError, setFNameError] = useState({
-        error: false,
-        errorHelper: '',
-    });
-    const [lNameError, setLNameError] = useState({
+    const [usernameError, setUsernameError] = useState({
         error: false,
         errorHelper: '',
     });
@@ -87,21 +83,13 @@ const SignUp = () => {
         } else {
             setPasswordError({ error: false, errorHelper: '' });
         }
-        if (isEmpty(data.firstName)) {
-            setFNameError({
+        if (isEmpty(data.username)) {
+            setUsernameError({
                 error: true,
-                errorHelper: 'FirstName cannot be empty',
+                errorHelper: 'Username cannot be empty',
             });
         } else {
-            setFNameError({ error: false, errorHelper: '' });
-        }
-        if (isEmpty(data.lastName)) {
-            setLNameError({
-                error: true,
-                errorHelper: 'LastName cannot be empty',
-            });
-        } else {
-            setLNameError({ error: false, errorHelper: '' });
+            setUsernameError({ error: false, errorHelper: '' });
         }
     };
 
@@ -121,33 +109,19 @@ const SignUp = () => {
                         onSubmit={handleSubmit((data) => formSubmit(data))}
                     >
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     inputRef={register}
-                                    autoComplete="fname"
-                                    name="firstName"
+                                    autoComplete="uname"
+                                    name="username"
                                     variant="outlined"
                                     required
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
+                                    id="username"
+                                    label="Username"
                                     autoFocus
-                                    error={fNameError.error}
-                                    helperText={fNameError.errorHelper}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    inputRef={register}
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
-                                    error={lNameError.error}
-                                    helperText={lNameError.errorHelper}
+                                    error={usernameError.error}
+                                    helperText={usernameError.errorHelper}
                                 />
                             </Grid>
                             <Grid item xs={12}>

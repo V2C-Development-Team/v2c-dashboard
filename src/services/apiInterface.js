@@ -1,6 +1,6 @@
 // A reusable promise-based interface to manage api calls.
 
-import api, { apiErrorMsg, CancelToken } from './api';
+import { dispatcherService, apiErrorMsg, CancelToken } from './api';
 
 class ApiInterface {
     constructor() {
@@ -24,7 +24,8 @@ class ApiInterface {
 
     pullLogs(cancelToken) {
         return new Promise(async (resolve, reject) => {
-            api.get('/v1/log')
+            dispatcherService
+                .get('/v1/log')
                 .then((res) => {
                     const logs = res.data.LOG;
                     resolve(logs);
@@ -37,7 +38,8 @@ class ApiInterface {
 
     pullSessions(cancelToken) {
         return new Promise(async (resolve, reject) => {
-            api.get('/v1/registeredsessions')
+            dispatcherService
+                .get('/v1/registeredsessions')
                 .then((res) => {
                     const sessions = res.data['Connected Applications'];
                     resolve(sessions);

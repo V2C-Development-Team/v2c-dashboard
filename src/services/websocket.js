@@ -1,10 +1,13 @@
 export const stateEnum = { CONNECTING: 0, OPEN: 1, CLOSING: 2, CLOSED: 3 };
 Object.freeze(stateEnum);
 
-const socket = new WebSocket(process.env.REACT_APP_WS_URL);
+let socket = new WebSocket(process.env.REACT_APP_WS_URL);
 
 const appName = 'DASHBOARD';
 const eavesDrop = true;
+
+export const reconnect = () => new WebSocket(process.env.REACT_APP_WS_URL);
+
 export const wsRegister = () => {
     if (socket.readyState === stateEnum.OPEN) {
         // register listener when connection is established

@@ -28,7 +28,8 @@ export const useConnection = () => {
 
     const connectListener = useCallback(() => {
         ws.addEventListener('open', () => {
-            wsRegister();
+            console.log('OPEN');
+            wsRegister(ws);
             setIsConnected(true);
             setAttempt(1);
             enqueueSnackbar('DASHBOARD connected', {
@@ -37,13 +38,14 @@ export const useConnection = () => {
                     vertical: 'bottom',
                     horizontal: 'center',
                 },
+                preventDuplicate: true,
             });
         });
     }, [enqueueSnackbar]);
 
     const disconnectListener = useCallback(() => {
         ws.addEventListener('close', () => {
-            wsDeregister();
+            wsDeregister(ws);
             setIsConnected(false);
             enqueueSnackbar('Not connected', {
                 variant: 'error',
@@ -51,12 +53,12 @@ export const useConnection = () => {
                     vertical: 'bottom',
                     horizontal: 'center',
                 },
+                preventDuplicate: true,
             });
         });
     }, [enqueueSnackbar]);
 
     const resuscitate = useCallback(() => {
-        ws.close();
         ws = reconnect();
         connectListener();
         disconnectListener();
@@ -85,8 +87,11 @@ export const useConnection = () => {
             if (attempt <= 3) {
                 interval = setInterval(() => {
                     resuscitate();
+                    console.log('interval');
                 }, 6000);
             }
+        } else {
+            clearInterval(interval);
         }
         return () => {
             clearInterval(interval);

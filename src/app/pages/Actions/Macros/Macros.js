@@ -97,14 +97,14 @@ const Macros = (props) => {
 
     const handleAddKeystrokes = (e) => {
         e.preventDefault();
-        let modifier = '';
+        /*         let modifier = '';
         modifier += e.altKey ? 'Alt+' : '';
         modifier += e.ctrlKey ? 'Control+' : '';
-        modifier += e.shiftKey ? 'Shift+' : '';
-        let entry = modifier + e.key;
+        modifier += e.shiftKey ? 'Shift+' : ''; */
+        let entry = e.key;
         if (entry === ' ') entry = 'Space';
         if (entry === '') return;
-        if (e.key === 'Control' || e.key === 'Shift' || e.key === 'Alt') return; // prevent entries with only modifier keys
+        // if (e.key === 'Control' || e.key === 'Shift' || e.key === 'Alt') return; // prevent entries with only modifier keys
         const VKValue = getVKValue(entry);
         setKeystrokes((ks) => [...ks, { kid, entry: entry.toUpperCase() }]);
         setVKKeystrokes((ks) => [...ks, { kid, VKValue }]);
@@ -153,7 +153,7 @@ const Macros = (props) => {
         const macro = {
             name,
             description,
-            keypresses: [...[VKKeystrokes.map((ks) => ks.VKValue)]],
+            keypresses: [...VKKeystrokes.map((ks) => ks.VKValue)],
             directive,
             enabled: macroEnabled,
         };

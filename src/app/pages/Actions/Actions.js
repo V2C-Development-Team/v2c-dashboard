@@ -51,7 +51,7 @@ function a11yProps(index) {
 
 const Actions = (props) => {
     const _classes = useStyles();
-    const DEVICE_NAME = 'DESKTOP_CONTROLLER';
+    const DEVICE_NAME = 'desktop';
     const [value, setValue] = useState(0);
     const [cid, setCid] = useState(0);
     const [mid, setMid] = useState(0);

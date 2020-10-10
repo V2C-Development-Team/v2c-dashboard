@@ -33,7 +33,7 @@ const ProfileCard = (props) => {
                     H
                 </Avatar>
                 <Typography variant="h5" component="h5">
-                    Hello, Hack3er
+                    Hello, Hack3r
                 </Typography>
             </CardContent>
         </Card>

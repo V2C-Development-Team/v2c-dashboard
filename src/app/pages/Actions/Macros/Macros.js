@@ -119,7 +119,9 @@ const Macros = (props) => {
 
     const handleDeleteKeystroke = (kid) => {
         const tempKeystrokes = keystrokes.filter((ks) => ks.kid !== kid);
+        const tempVKKeystrokes = VKKeystrokes.filter((ks) => ks.kid !== kid);
         setKeystrokes(tempKeystrokes);
+        setVKKeystrokes(tempVKKeystrokes);
     };
 
     const handleMoveKeystrokeUp = (kid) => {

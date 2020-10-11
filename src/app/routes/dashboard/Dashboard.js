@@ -11,6 +11,9 @@ const Dashboard = (props) => {
     return (
         <div className={classes.dashboard}>
             <main className={classes.main}>
+                <div className={classes.statusText}>
+                    {props.isConnected ? 'online' : 'offline'}
+                </div>
                 <Switch>
                     <Route path="/dashboard/metrics" component={Metrics} />
                     <Route

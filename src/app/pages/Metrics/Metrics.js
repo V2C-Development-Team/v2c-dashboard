@@ -13,7 +13,7 @@ const Metrics = (props) => {
         <div className={classes.metrics}>
             <ToolBar crumbs={['Metrics']} />
             <Typography variant="h5" component="h5">
-                Some Header
+                V2C Metrics
             </Typography>
             <Grid container spacing={3} style={{ marginTop: 15 }}>
                 <Grid item xs={12} md={4}>

@@ -51,7 +51,7 @@ function a11yProps(index) {
 
 const Actions = (props) => {
     const _classes = useStyles();
-    const DEVICE_NAME = 'DESKTOP_CONTROLLER';
+    const DEVICE_NAME = 'desktop';
     const [value, setValue] = useState(0);
     const [cid, setCid] = useState(0);
     const [mid, setMid] = useState(0);
@@ -74,6 +74,16 @@ const Actions = (props) => {
         macro.mid = mid;
         setMacros([macro, ...macros]);
         setMid((mid) => mid + 1);
+    };
+
+    const handleAddActions = ({ commands, macros }) => {
+        commands.forEach((command, index) => {
+            command.cid = index;
+        });
+        macros.forEach((macro, index) => {
+            macro.mid = index;
+        });
+        setActions({ commands, macros });
     };
 
     const updateConfig = useCallback(() => {
@@ -134,7 +144,7 @@ const Actions = (props) => {
                         <TabPanel value={value} index={2}>
                             <ActionsRaw
                                 data={actions}
-                                updateActions={setActions}
+                                updateActions={handleAddActions}
                             />
                         </TabPanel>
                     </div>

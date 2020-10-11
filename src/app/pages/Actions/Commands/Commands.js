@@ -129,7 +129,7 @@ const Commands = (props) => {
         const command = {
             name,
             description,
-            executables: [...[executables.map((cmd) => cmd.entry)]],
+            executables: [...executables.map((cmd) => cmd.entry)],
             directive,
             enabled: commandEnabled,
         };

@@ -31,9 +31,7 @@ const ActionsRaw = (props) => {
     const [error, setError] = useState('');
     const [isSaved, setIsSaved] = useState(false);
     const [isSaveDisabled, setIsSaveDisabled] = useState(true);
-    const [code, setCode] = useState(
-        JSON.stringify(props.data, null, 2) || base
-    );
+    const [code, setCode] = useState(base);
 
     const handleSaveActions = () => {
         try {
@@ -46,12 +44,23 @@ const ActionsRaw = (props) => {
             setError(error.message);
         }
     };
-
+    const stripIds = ({ commands, macros }) => {
+        commands.forEach((command) => {
+            delete command.cid;
+        });
+        macros.forEach((macro) => {
+            delete macro.cid;
+        });
+        return JSON.stringify({ commands, macros }, null, 2);
+    };
     useEffect(() => {
-        if (code === JSON.stringify(props.data, null, 2))
-            setIsSaveDisabled(true);
+        if (code === stripIds(props.data)) setIsSaveDisabled(true);
         else setIsSaveDisabled(false);
     }, [code, props.data]);
+
+    useEffect(() => {
+        setCode(stripIds(props.data));
+    }, [props.data]);
 
     return (
         <Fragment>

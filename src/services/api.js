@@ -10,6 +10,7 @@ const getAuthHeader = () => {
     const email = auth.getEmail();
     const password = atob(auth.getPassword());
     const authHeader = btoa(`${email}:${password}`);
+    auth.createSession(authHeader);
     return authHeader;
 };
 
@@ -38,10 +39,10 @@ service.interceptors.request.use((config) => {
     if (config.isAuthorization) {
         config.headers.Authorization = 'V2C ' + getAuthHeader();
     } else {
-        config.headers['X-V2C-Session'] = auth.getSessionToken();
+        // config.headers['X-V2C-Session'] = auth.getSessionToken();
+        config.headers.Authorization = 'V2C ' + auth.getSessionToken();
     }
 
-    console.log(config);
     /*     if (config.hasCAPTCHA) {
         const captcha = auth.getReCAPTCHA();
         config.headers['X-G-RECAPTCHA-RESPONSE'] = captcha;
@@ -54,10 +55,13 @@ service.interceptors.response.use((config) => {
     if (config.headers['x-v2c-csrf']) {
         auth.createSession(config.headers['x-v2c-csrf']);
     }
+    if (config.headers['x-v2c-user']) {
+        auth.login({ uid: config.headers['x-v2c-user'] });
+    }
     if (config.status === 401) {
         auth.logout();
     }
-    console.log('res', config);
+    console.log(config);
     return config;
 });
 

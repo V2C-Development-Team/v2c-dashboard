@@ -11,13 +11,14 @@ class AuthStrategy {
                 if (response.data.user) {
                     auth.login();
                 } else {
+                    auth.logout();
                 }
             } catch (error) {
                 auth.destroySession();
-            } finally {
-                return true;
             }
         }
+
+        return true;
     }
 
     doLogOut() {

@@ -37,11 +37,14 @@ const Start = () => {
     }, [prefersDarkMode]);
 
     useEffect(() => {
-        if (authStrategy.doAuth()) {
-            setIsHydrated(true);
-        } else {
-            setIsHydrated(false);
-        }
+        const hydrate = async () => {
+            if (await authStrategy.doAuth()) {
+                setIsHydrated(true);
+            } else {
+                setIsHydrated(false);
+            }
+        };
+        hydrate();
     }, []);
 
     React.createContext({ themeColor, toggleThemeColor });
@@ -52,7 +55,7 @@ const Start = () => {
                 <ThemeContext.Provider value={{ themeColor, toggleThemeColor }}>
                     <SnackbarProvider>
                         <div className={themeColor}>
-                            {isHydrated && <Layout />}
+                            {isHydrated ? <Layout /> : null}
                         </div>
                     </SnackbarProvider>
                 </ThemeContext.Provider>

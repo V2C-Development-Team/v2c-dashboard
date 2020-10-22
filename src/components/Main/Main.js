@@ -14,8 +14,18 @@ const Main = (props) => {
         <div className={classes.main}>
             <Switch>
                 <Route exact path="/" component={Landing} />
-                <Route exact path="/login" component={SignIn} />
-                <Route exact path="/register" component={SignUp} />
+                <ProtectedRoute
+                    path="/login"
+                    rule={br.login}
+                    routeTo="/dashboard"
+                    component={SignIn}
+                />
+                <ProtectedRoute
+                    path="/register"
+                    rule={br.register}
+                    routeTo="/dashboard"
+                    component={SignUp}
+                />
                 <ProtectedRoute
                     path="/dashboard"
                     rule={br.dashboard}

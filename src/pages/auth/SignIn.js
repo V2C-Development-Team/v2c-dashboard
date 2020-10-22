@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import isEmail from 'validator/lib/isEmail';
@@ -21,6 +21,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import auth from '../../whoami/auth';
 import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
+import apiInterface from '../../services/apiInterface';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = (props) => {
+    const history = useHistory();
     const classes = useStyles();
+    const [signInError, setSignInError] = useState('');
     const { register, handleSubmit } = useForm();
     const [emailError, setEmailError] = useState({
         error: false,
@@ -64,8 +67,9 @@ const SignIn = (props) => {
         );
     };
 
-    const formSubmit = (data) => {
-        if (!isEmail(data.email)) {
+    const formSubmit = async (data) => {
+        const { email, password } = data;
+        if (!isEmail(email)) {
             setEmailError({
                 error: true,
                 errorHelper: 'Enter a valid email address',
@@ -74,7 +78,7 @@ const SignIn = (props) => {
         } else {
             setEmailError({ error: false, errorHelper: '' });
         }
-        if (isEmpty(data.password)) {
+        if (isEmpty(password)) {
             setPasswordError({
                 error: true,
                 errorHelper: 'Password cannot be empty',
@@ -84,8 +88,22 @@ const SignIn = (props) => {
             setPasswordError({ error: false, errorHelper: '' });
         }
 
+        // login
+        try {
+            auth.setCredentials(email, password);
+            const res = await apiInterface.getConfig({ isAuth: true });
+            if (res.data.user) {
+                auth.login({ stay: data.remember });
+                history.push('/dashboard');
+            } else {
+                throw new Error('Incorrect email or password');
+            }
+        } catch (error) {
+            setSignInError(error.message);
+        }
+
         // for demo purposes
-        if (data.email === 'demo@email.com' && data.password === '2020') {
+        /*         if (data.email === 'demo@email.com' && data.password === '2020') {
             auth.login({ stay: data.remember });
             props.history.push('/dashboard');
         } else {
@@ -93,7 +111,7 @@ const SignIn = (props) => {
                 error: true,
                 errorHelper: 'User does not exist',
             });
-        }
+        } */
     };
 
     return (
@@ -111,6 +129,16 @@ const SignIn = (props) => {
                         noValidate
                         onSubmit={handleSubmit((data) => formSubmit(data))}
                     >
+                        <small
+                            style={{
+                                display: 'block',
+                                textAlign: 'center',
+                                color: 'tomato',
+                                marginBottom: 20,
+                            }}
+                        >
+                            {signInError}
+                        </small>
                         <TextField
                             inputRef={register}
                             variant="outlined"

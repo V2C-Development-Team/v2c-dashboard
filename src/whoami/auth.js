@@ -13,6 +13,7 @@ class Auth {
         this.password = '';
         this.sessionToken = '';
         this.currentReCAPTCHA = null;
+        this.stay = false;
     }
     /**
      *
@@ -25,8 +26,7 @@ class Auth {
         this.userID = user.uid;
         this.email = user.email;
         this.user = user;
-        jscookie.set('user', btoa(user.uid));
-        // for demo purposes
+        this.stay = user.stay;
         if (user.stay === true) {
             localStorage.setItem('stay', 'true');
         }

@@ -36,11 +36,12 @@ service.interceptors.request.use((config) => {
         );
     }
     if (config.isAuthorization) {
-        config.headers.Authorization = 'Basic ' + getAuthHeader();
+        config.headers.Authorization = 'V2C ' + getAuthHeader();
     } else {
-        config.headers['X-Access-Token'] = auth.getSessionToken();
+        config.headers['X-V2C-Session'] = auth.getSessionToken();
     }
 
+    console.log(config);
     /*     if (config.hasCAPTCHA) {
         const captcha = auth.getReCAPTCHA();
         config.headers['X-G-RECAPTCHA-RESPONSE'] = captcha;
@@ -50,12 +51,13 @@ service.interceptors.request.use((config) => {
 });
 
 service.interceptors.response.use((config) => {
-    if (config.headers['x-access-token']) {
-        auth.createSession(config.headers['x-access-token']);
+    if (config.headers['x-v2c-csrf']) {
+        auth.createSession(config.headers['x-v2c-csrf']);
     }
     if (config.status === 401) {
         auth.logout();
     }
+    console.log('res', config);
     return config;
 });
 

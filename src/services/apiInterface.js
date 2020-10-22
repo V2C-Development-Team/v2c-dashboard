@@ -1,6 +1,6 @@
 // A reusable promise-based interface to manage api calls.
 
-import { dispatcherService, apiErrorMsg, CancelToken } from './api';
+import api, { dispatcherService, apiErrorMsg, CancelToken } from './api';
 
 class ApiInterface {
     constructor() {
@@ -17,15 +17,66 @@ class ApiInterface {
     }
 
     login(data, cancelToken) {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             reject(new Error('Not Implemented'));
         });
     }
+    createUser(data, cancelToken) {
+        return new Promise((resolve, reject) => {
+            api.post('/users', { ...data }, { cancelToken })
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(this.getErrorMessage(err));
+                });
+        });
+    }
 
-    pullLogs(cancelToken) {
-        return new Promise(async (resolve, reject) => {
+    updateUser({ uid, email, username, password }, cancelToken) {
+        return new Promise((resolve, reject) => {
+            api.patch(
+                '/users/' + uid,
+                { email, username, password },
+                { cancelToken }
+            )
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(this.getErrorMessage(err));
+                });
+        });
+    }
+
+    // also used for login since it can return a token without mutating data
+    getConfig({ isAuth }, cancelToken) {
+        return new Promise((resolve, reject) => {
+            api.get('/config', { isAuthorization: isAuth, cancelToken })
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(this.getErrorMessage(err));
+                });
+        });
+    }
+    setConfig({ config }, cancelToken) {
+        return new Promise((resolve, reject) => {
+            api.put('/config', { ...config }, { cancelToken })
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    reject(this.getErrorMessage(err));
+                });
+        });
+    }
+
+    pullLogs() {
+        return new Promise((resolve, reject) => {
             dispatcherService
-                .get('/v1/log')
+                .get('/log')
                 .then((res) => {
                     const logs = res.data.LOG;
                     resolve(logs);
@@ -36,10 +87,10 @@ class ApiInterface {
         });
     }
 
-    pullSessions(cancelToken) {
-        return new Promise(async (resolve, reject) => {
+    pullSessions() {
+        return new Promise((resolve, reject) => {
             dispatcherService
-                .get('/v1/registeredsessions')
+                .get('/registeredsessions')
                 .then((res) => {
                     const sessions = res.data['Connected Applications'];
                     resolve(sessions);

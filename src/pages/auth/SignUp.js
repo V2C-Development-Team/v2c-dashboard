@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import isEmail from 'validator/lib/isEmail';
@@ -20,6 +20,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
+import apiInterface from '../../services/apiInterface';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -41,9 +43,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const cancelSource = apiInterface.CancelToken.source();
 const SignUp = () => {
+    const history = useHistory();
     const classes = useStyles();
     const { register, handleSubmit } = useForm();
+    const [signUpError, setSignUpError] = useState('');
     const [emailError, setEmailError] = useState({
         error: false,
         errorHelper: '',
@@ -66,32 +71,52 @@ const SignUp = () => {
         );
     };
 
-    const formSubmit = (data) => {
-        if (!isEmail(data.email)) {
-            setEmailError({
-                error: true,
-                errorHelper: 'Enter a valid email address',
-            });
-        } else {
-            setEmailError({ error: false, errorHelper: '' });
-        }
-        if (isEmpty(data.password)) {
-            setPasswordError({
-                error: true,
-                errorHelper: 'Password cannot be empty',
-            });
-        } else {
-            setPasswordError({ error: false, errorHelper: '' });
-        }
-        if (isEmpty(data.username)) {
+    const formSubmit = async (data) => {
+        const { username, email, password } = data;
+        if (isEmpty(username)) {
             setUsernameError({
                 error: true,
                 errorHelper: 'Username cannot be empty',
             });
+            return;
         } else {
             setUsernameError({ error: false, errorHelper: '' });
         }
+        if (!isEmail(email)) {
+            setEmailError({
+                error: true,
+                errorHelper: 'Enter a valid email address',
+            });
+            return;
+        } else {
+            setEmailError({ error: false, errorHelper: '' });
+        }
+        if (isEmpty(password)) {
+            setPasswordError({
+                error: true,
+                errorHelper: 'Password cannot be empty',
+            });
+            return;
+        } else {
+            setPasswordError({ error: false, errorHelper: '' });
+        }
+
+        try {
+            await apiInterface.createUser(
+                { username, email, password },
+                cancelSource.token
+            );
+            history.push('/login');
+        } catch (error) {
+            setSignUpError(error.message);
+        }
     };
+
+    useEffect(() => {
+        return () => {
+            cancelSource.cancel();
+        };
+    }, []);
 
     return (
         <Paper square elevation={0} style={{ flex: 1 }}>
@@ -108,6 +133,16 @@ const SignUp = () => {
                         noValidate
                         onSubmit={handleSubmit((data) => formSubmit(data))}
                     >
+                        <small
+                            style={{
+                                display: 'block',
+                                textAlign: 'center',
+                                color: 'tomato',
+                                marginBottom: 20,
+                            }}
+                        >
+                            {signUpError}
+                        </small>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField

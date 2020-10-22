@@ -7,6 +7,7 @@ import Layout from './components/Layout/Layout';
 import { StylesProvider } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ThemeContext } from './context/themeContext';
+import authStrategy from './whoami/authStrategy';
 
 const Start = () => {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -14,6 +15,7 @@ const Start = () => {
     const [themeColor, setThemeColor] = useState(
         themePref || (prefersDarkMode ? 'dark' : 'light')
     );
+    const [isHydrated, setIsHydrated] = useState(false);
 
     const toggleThemeColor = () => {
         setThemeColor((themeColor) =>
@@ -34,6 +36,14 @@ const Start = () => {
         setThemeColor(tempThemeColor);
     }, [prefersDarkMode]);
 
+    useEffect(() => {
+        if (authStrategy.doAuth()) {
+            setIsHydrated(true);
+        } else {
+            setIsHydrated(false);
+        }
+    }, []);
+
     React.createContext({ themeColor, toggleThemeColor });
 
     return (
@@ -42,7 +52,7 @@ const Start = () => {
                 <ThemeContext.Provider value={{ themeColor, toggleThemeColor }}>
                     <SnackbarProvider>
                         <div className={themeColor}>
-                            <Layout />
+                            {isHydrated && <Layout />}
                         </div>
                     </SnackbarProvider>
                 </ThemeContext.Provider>

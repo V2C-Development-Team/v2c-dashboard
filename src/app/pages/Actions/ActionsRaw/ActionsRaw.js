@@ -35,6 +35,7 @@ const ActionsRaw = (props) => {
 
     const handleSaveActions = () => {
         try {
+            // setCode(stripIds)
             const actions = JSON.parse(code);
             props.updateActions(actions);
             setError('');
@@ -49,7 +50,7 @@ const ActionsRaw = (props) => {
             delete command.cid;
         });
         macros.forEach((macro) => {
-            delete macro.cid;
+            delete macro.mid;
         });
         return JSON.stringify({ commands, macros }, null, 2);
     };

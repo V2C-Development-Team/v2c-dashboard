@@ -8,6 +8,7 @@ import NotFound from '../../pages/auth/NotFound';
 import ProtectedRoute from '../../hoc/ProtectedRoute';
 import App from '../../app/App';
 import br from '../../whoami/businessRules';
+import Help from '../../pages/misc/Help/Help';
 
 const Main = (props) => {
     return (
@@ -32,6 +33,7 @@ const Main = (props) => {
                     routeTo="/login"
                     component={App}
                 />
+                <Route exact path="/help" component={Help} />
                 <Route component={NotFound} />
             </Switch>
         </div>

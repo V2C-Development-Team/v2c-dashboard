@@ -22,6 +22,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
 import apiInterface from '../../services/apiInterface';
 import { useEffect } from 'react';
+import auth from '../../whoami/auth';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -106,6 +107,9 @@ const SignUp = () => {
                 { username, email, password },
                 cancelSource.token
             );
+            auth.setCredentials(email, password);
+            await apiInterface.getConfig({ isAuth: true }, cancelSource.token);
+            await apiInterface.setConfig({ username }, cancelSource.token);
             history.push('/login');
         } catch (error) {
             setSignUpError(error.message);

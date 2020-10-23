@@ -16,6 +16,7 @@ class AuthStrategy {
                     auth.logout();
                 }
             } catch (error) {
+                console.log(error);
                 auth.destroySession();
             } finally {
                 return true;

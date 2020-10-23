@@ -24,7 +24,6 @@ class Auth {
     login(user) {
         this.authenticated = true;
         this.user = user;
-        this.stay = user.stay;
         if (user?.uid) {
             jscookie.set('user', btoa(user.uid));
             this.userID = user.uid;

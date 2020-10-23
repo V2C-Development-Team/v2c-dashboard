@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         },
     },
 });
-
+const cancelSource = apiInterface.CancelToken.source();
 export default function SettingsDialog(props) {
     const classes = useStyles();
     const formRef = React.useRef(null);
@@ -52,12 +52,21 @@ export default function SettingsDialog(props) {
             }
             // update user
             try {
-                await apiInterface.updateUser({
-                    uid: auth.getUserID(),
-                    email,
-                    username,
-                    password,
-                });
+                await apiInterface.updateUser(
+                    {
+                        uid: auth.getUserID(),
+                        email,
+                        username,
+                        password,
+                    },
+                    cancelSource.token
+                );
+                await apiInterface.setConfig(
+                    {
+                        username,
+                    },
+                    cancelSource.token
+                );
                 setStatus({
                     msg: 'Settings updated successfully',
                     type: 'success',
@@ -68,6 +77,12 @@ export default function SettingsDialog(props) {
         }
     };
     const EmptyTab = () => <div></div>;
+
+    useEffect(() => {
+        return () => {
+            cancelSource.cancel();
+        };
+    }, []);
     return (
         <div>
             <Dialog

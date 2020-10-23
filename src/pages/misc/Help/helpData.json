@@ -1,0 +1,22 @@
+[
+    {
+        "question": "How do I create an account?",
+        "answer": "Click the 'Sign in' button and click on the 'Sign Up' link and enter your credentials. "
+    },
+    {
+        "question": "How do I switch to dark mode?",
+        "answer": "Toggle the sun icon in the application toolbar to switch between light & dark theme modes. "
+    },
+    {
+        "question": "How can I update my user profile?",
+        "answer": "Log in to your dashboard, go to Settings > Profile; make changes and click 'Save'."
+    },
+    {
+        "question": "How can I connect to a V2C enabled app?",
+        "answer": "The available applications can be found on your dashboard, click on the 'Connect' button to startup any of them."
+    },
+    {
+        "question": "How can I control my desktop applications using voice?",
+        "answer": "1. Check the 'Network' tab on your dashboard to make sure the recognizer and desktop controller modules are running. 2. Setup actions in the 'Actions' tab to define commands for your desktop. 3. Using your activation phrase (default: blue), say your command."
+    }
+]

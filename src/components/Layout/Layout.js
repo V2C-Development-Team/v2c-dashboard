@@ -14,7 +14,7 @@ const Layout = (props) => {
             value={{ isAuthenticated: isAuth, setIsAuthenticated: setIsAuth }}
         >
             <div className={classes.layout}>
-                <Main setAuthState={setIsAuth} />
+                <Main />
                 {/* <App /> */}
             </div>
         </AuthContext.Provider>

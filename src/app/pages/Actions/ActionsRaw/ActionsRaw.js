@@ -10,6 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import cloneDeep from 'lodash.clonedeep';
 
 const base = `{
 }
@@ -35,6 +36,7 @@ const ActionsRaw = (props) => {
 
     const handleSaveActions = () => {
         try {
+            // setCode(stripIds)
             const actions = JSON.parse(code);
             props.updateActions(actions);
             setError('');
@@ -45,13 +47,19 @@ const ActionsRaw = (props) => {
         }
     };
     const stripIds = ({ commands, macros }) => {
-        commands.forEach((command) => {
+        let _commands = cloneDeep(commands);
+        let _macros = cloneDeep(macros);
+        _commands.forEach((command) => {
             delete command.cid;
         });
-        macros.forEach((macro) => {
-            delete macro.cid;
+        _macros.forEach((macro) => {
+            delete macro.mid;
         });
-        return JSON.stringify({ commands, macros }, null, 2);
+        return JSON.stringify(
+            { commands: _commands, macros: _macros },
+            null,
+            2
+        );
     };
     useEffect(() => {
         if (code === stripIds(props.data)) setIsSaveDisabled(true);

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Paper } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import isEmail from 'validator/lib/isEmail';
@@ -21,6 +21,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import auth from '../../whoami/auth';
 import withHeaderAndFooter from '../../hoc/withHeaderAndFooter';
+import apiInterface from '../../services/apiInterface';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,7 +44,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = (props) => {
+    const history = useHistory();
     const classes = useStyles();
+    const [signInError, setSignInError] = useState('');
     const { register, handleSubmit } = useForm();
     const [emailError, setEmailError] = useState({
         error: false,
@@ -64,8 +67,9 @@ const SignIn = (props) => {
         );
     };
 
-    const formSubmit = (data) => {
-        if (!isEmail(data.email)) {
+    const formSubmit = async (data) => {
+        const { email, password } = data;
+        if (!isEmail(email)) {
             setEmailError({
                 error: true,
                 errorHelper: 'Enter a valid email address',
@@ -74,7 +78,7 @@ const SignIn = (props) => {
         } else {
             setEmailError({ error: false, errorHelper: '' });
         }
-        if (isEmpty(data.password)) {
+        if (isEmpty(password)) {
             setPasswordError({
                 error: true,
                 errorHelper: 'Password cannot be empty',
@@ -86,13 +90,23 @@ const SignIn = (props) => {
 
         // for demo purposes
         if (data.email === 'demo@email.com' && data.password === '2020') {
-            auth.login({ stay: data.remember });
+            auth.login({ stay: true });
             props.history.push('/dashboard');
-        } else {
-            setEmailError({
-                error: true,
-                errorHelper: 'User does not exist',
-            });
+            return;
+        }
+
+        // login
+        try {
+            auth.setCredentials(email, password);
+            const res = await apiInterface.getConfig({ isAuth: true });
+            if (res.data.user) {
+                // auth.login();
+                history.push('/dashboard');
+            } else {
+                throw new Error('Incorrect email or password');
+            }
+        } catch (error) {
+            setSignInError(error.message);
         }
     };
 
@@ -111,6 +125,16 @@ const SignIn = (props) => {
                         noValidate
                         onSubmit={handleSubmit((data) => formSubmit(data))}
                     >
+                        <small
+                            style={{
+                                display: 'block',
+                                textAlign: 'center',
+                                color: 'tomato',
+                                marginBottom: 20,
+                            }}
+                        >
+                            {signInError}
+                        </small>
                         <TextField
                             inputRef={register}
                             variant="outlined"
@@ -155,7 +179,7 @@ const SignIn = (props) => {
                                 ),
                             }}
                         />
-                        <FormControlLabel
+                        {/* <FormControlLabel
                             control={
                                 <Checkbox
                                     inputRef={register}
@@ -165,7 +189,7 @@ const SignIn = (props) => {
                                 />
                             }
                             label="Keep me signed in"
-                        />
+                        /> */}
                         <Button
                             type="submit"
                             fullWidth

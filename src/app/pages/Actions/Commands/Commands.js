@@ -147,7 +147,6 @@ const Commands = (props) => {
         } else {
             newChecked.splice(currentIndex, 1);
         }
-        console.log(newChecked);
 
         if (newChecked.length === data.length) {
             setIndeterminate(false);

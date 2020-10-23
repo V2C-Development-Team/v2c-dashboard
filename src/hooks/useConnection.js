@@ -28,7 +28,6 @@ export const useConnection = () => {
 
     const connectListener = useCallback(() => {
         ws.addEventListener('open', () => {
-            console.log('OPEN');
             wsRegister(ws);
             setIsConnected(true);
             setAttempt(1);
@@ -87,7 +86,6 @@ export const useConnection = () => {
             if (attempt <= 3) {
                 interval = setInterval(() => {
                     resuscitate();
-                    console.log('interval');
                 }, 6000);
             }
         } else {

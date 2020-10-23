@@ -12,6 +12,7 @@ import Commands from './Commands/Commands';
 import Macros from './Macros/Macros';
 import ActionsRaw from './ActionsRaw/ActionsRaw';
 import { useWebsocket } from '../../../hooks/useWebsocket';
+import apiInterface from '../../../services/apiInterface';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -49,6 +50,7 @@ function a11yProps(index) {
     };
 }
 
+const cancelSource = apiInterface.CancelToken.source();
 const Actions = (props) => {
     const _classes = useStyles();
     const DEVICE_NAME = 'desktop';
@@ -83,20 +85,51 @@ const Actions = (props) => {
         macros.forEach((macro, index) => {
             macro.mid = index;
         });
+        setCommands(commands);
+        setMacros(macros);
         setActions({ commands, macros });
     };
 
-    const updateConfig = useCallback(() => {
+    const updateConfig = useCallback(async () => {
+        if (commands.length === 0 && macros.length === 0) return;
         conn.config(actions, DEVICE_NAME);
+        try {
+            await apiInterface.setConfig({ actions }, cancelSource.token);
+        } catch (error) {
+            console.log(
+                'actions config failed to update -- backend maybe down'
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actions, conn]);
 
     useEffect(() => {
-        setActions({ commands, macros });
+        handleAddActions({ commands, macros });
     }, [commands, macros]);
 
     useEffect(() => {
         updateConfig();
-    }, [actions, updateConfig]);
+    }, [updateConfig]);
+
+    useEffect(() => {
+        const fetchActionsConfig = async () => {
+            try {
+                const response = await apiInterface.getConfig(
+                    { isAuth: false },
+                    cancelSource.token
+                );
+                const data = response.data?.user?.actions;
+                if (data) handleAddActions(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchActionsConfig();
+        return () => {
+            cancelSource.cancel();
+        };
+    }, []);
 
     return (
         <div className={classes.sessions}>

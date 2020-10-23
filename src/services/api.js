@@ -10,6 +10,7 @@ const getAuthHeader = () => {
     const email = auth.getEmail();
     const password = atob(auth.getPassword());
     const authHeader = btoa(`${email}:${password}`);
+    auth.createSession(authHeader);
     return authHeader;
 };
 
@@ -17,14 +18,14 @@ export const dispatcherService = axios.create({
     baseURL: process.env.REACT_APP_DISPATCHER_URL,
     headers: { 'Cache-Control': 'no-cache' },
     responseType: 'json',
-    timeout: 60000,
+    timeout: 6000,
 });
 
 const service = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
     headers: { 'Cache-Control': 'no-cache' },
     responseType: 'json',
-    timeout: 60000,
+    timeout: 6000,
     isDelayed: false,
     isAuthorization: false,
 });
@@ -36,9 +37,10 @@ service.interceptors.request.use((config) => {
         );
     }
     if (config.isAuthorization) {
-        config.headers.Authorization = 'Basic ' + getAuthHeader();
+        config.headers.Authorization = 'V2C ' + getAuthHeader();
     } else {
-        config.headers['X-Access-Token'] = auth.getSessionToken();
+        // config.headers['X-V2C-Session'] = auth.getSessionToken();
+        config.headers.Authorization = 'V2C ' + auth.getSessionToken();
     }
 
     /*     if (config.hasCAPTCHA) {
@@ -50,8 +52,11 @@ service.interceptors.request.use((config) => {
 });
 
 service.interceptors.response.use((config) => {
-    if (config.headers['x-access-token']) {
-        auth.createSession(config.headers['x-access-token']);
+    if (config.headers['x-v2c-csrf']) {
+        auth.createSession(config.headers['x-v2c-csrf']);
+    }
+    if (config.headers['x-v2c-user']) {
+        auth.login({ uid: config.headers['x-v2c-user'] });
     }
     if (config.status === 401) {
         auth.logout();

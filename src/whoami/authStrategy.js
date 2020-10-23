@@ -5,27 +5,30 @@ import * as actionTypes from '../store/actions'; */
 
 class AuthStrategy {
     async doAuth() {
+        //demo skip strategy for non-backend users
+        if (localStorage.getItem('stay') === 'true') return true;
         if (auth.isSessionHydrated()) {
             try {
-                let id = auth.getUserID();
-                if(!id || id === undefined) return
-                let response = await api.get('/users/' + id);
-                let user = response.data.users[0];
-                
-              //  store.dispatch({ type: actionTypes.LOG_IN, value: userData });
-                auth.login(user);
-
-                return;
+                let response = await api.get('/config');
+                if (response.data.user) {
+                    auth.login();
+                } else {
+                    auth.logout();
+                }
             } catch (error) {
+                console.log(error);
                 auth.destroySession();
-                return;
+            } finally {
+                return true;
             }
         }
+
+        return true;
     }
 
     doLogOut() {
         auth.logout();
-       // store.dispatch({ type: actionTypes.LOG_OUT });
+        // store.dispatch({ type: actionTypes.LOG_OUT });
     }
 }
 

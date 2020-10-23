@@ -38,10 +38,11 @@ const Start = () => {
 
     useEffect(() => {
         const hydrate = async () => {
-            if (await authStrategy.doAuth()) {
+            try {
+                await authStrategy.doAuth();
+            } catch (error) {
+            } finally {
                 setIsHydrated(true);
-            } else {
-                setIsHydrated(false);
             }
         };
         hydrate();

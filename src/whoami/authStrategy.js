@@ -15,6 +15,8 @@ class AuthStrategy {
                 }
             } catch (error) {
                 auth.destroySession();
+            } finally {
+                return true;
             }
         }
 

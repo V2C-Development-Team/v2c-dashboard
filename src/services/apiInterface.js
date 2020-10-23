@@ -52,7 +52,10 @@ class ApiInterface {
     // also used for login since it can return a token without mutating data
     getConfig({ isAuth }, cancelToken) {
         return new Promise((resolve, reject) => {
-            api.get('/config', { isAuthorization: isAuth, cancelToken })
+            api.get('/config', {
+                isAuthorization: isAuth || false,
+                cancelToken,
+            })
                 .then((res) => {
                     resolve(res);
                 })
@@ -61,9 +64,9 @@ class ApiInterface {
                 });
         });
     }
-    setConfig({ config }, cancelToken) {
+    setConfig(config, cancelToken) {
         return new Promise((resolve, reject) => {
-            api.put('/config', { ...config }, { cancelToken })
+            api.put('/config', { user: config }, { cancelToken })
                 .then((res) => {
                     resolve(res);
                 })

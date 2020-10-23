@@ -18,14 +18,14 @@ export const dispatcherService = axios.create({
     baseURL: process.env.REACT_APP_DISPATCHER_URL,
     headers: { 'Cache-Control': 'no-cache' },
     responseType: 'json',
-    timeout: 60000,
+    timeout: 6000,
 });
 
 const service = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
     headers: { 'Cache-Control': 'no-cache' },
     responseType: 'json',
-    timeout: 60000,
+    timeout: 6000,
     isDelayed: false,
     isAuthorization: false,
 });
@@ -61,7 +61,6 @@ service.interceptors.response.use((config) => {
     if (config.status === 401) {
         auth.logout();
     }
-    console.log(config);
     return config;
 });
 

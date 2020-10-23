@@ -5,6 +5,8 @@ import * as actionTypes from '../store/actions'; */
 
 class AuthStrategy {
     async doAuth() {
+        //demo skip strategy for non-backend users
+        if (localStorage.getItem('stay') === 'true') return true;
         if (auth.isSessionHydrated()) {
             try {
                 let response = await api.get('/config');

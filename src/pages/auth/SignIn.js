@@ -88,6 +88,13 @@ const SignIn = (props) => {
             setPasswordError({ error: false, errorHelper: '' });
         }
 
+        // for demo purposes
+        if (data.email === 'demo@email.com' && data.password === '2020') {
+            auth.login({ stay: true });
+            props.history.push('/dashboard');
+            return;
+        }
+
         // login
         try {
             auth.setCredentials(email, password);
@@ -101,17 +108,6 @@ const SignIn = (props) => {
         } catch (error) {
             setSignInError(error.message);
         }
-
-        // for demo purposes
-        /*         if (data.email === 'demo@email.com' && data.password === '2020') {
-            auth.login({ stay: data.remember });
-            props.history.push('/dashboard');
-        } else {
-            setEmailError({
-                error: true,
-                errorHelper: 'User does not exist',
-            });
-        } */
     };
 
     return (

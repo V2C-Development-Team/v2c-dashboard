@@ -9,6 +9,9 @@ import ProtectedRoute from '../../hoc/ProtectedRoute';
 import App from '../../app/App';
 import br from '../../whoami/businessRules';
 import Help from '../../pages/misc/Help/Help';
+import Privacy from '../../pages/misc/Privacy/Privacy';
+import About from '../../pages/misc/About/About';
+import Team from '../../pages/misc/Team/Team';
 
 const Main = (props) => {
     return (
@@ -33,6 +36,9 @@ const Main = (props) => {
                     routeTo="/login"
                     component={App}
                 />
+                <Route exact path="/privacy" component={Privacy} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/team" component={Team} />
                 <Route exact path="/help" component={Help} />
                 <Route component={NotFound} />
             </Switch>

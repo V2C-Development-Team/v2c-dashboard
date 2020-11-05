@@ -71,6 +71,7 @@ const Home = (props) => {
             );
         }
         setPinsComponent(tempPinsComponent);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pins]);
 
     return (

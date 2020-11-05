@@ -33,6 +33,12 @@ const AddConnectionDialog = (props) => {
     const [type, setType] = useState('');
     const [title, setTitle] = useState('');
 
+    React.useEffect(() => {
+        setUrl('');
+        setType('');
+        setTitle('');
+    }, []);
+
     return (
         <div>
             <Dialog

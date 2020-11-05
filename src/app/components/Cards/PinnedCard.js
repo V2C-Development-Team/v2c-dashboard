@@ -84,8 +84,8 @@ const PinnedCard = ({ title, type, empty, onConnect, onDelete }) => {
                     </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Remove from pinned">
-                    <IconButton>
+                <Tooltip title="Remove pin">
+                    <IconButton onClick={onDelete ? onDelete : null}>
                         <FiTrash fontSize="18px" />
                     </IconButton>
                 </Tooltip>

@@ -191,6 +191,7 @@ const SignIn = (props) => {
                             label="Keep me signed in"
                         /> */}
                         <Button
+                            id="signIn"
                             type="submit"
                             fullWidth
                             variant="contained"

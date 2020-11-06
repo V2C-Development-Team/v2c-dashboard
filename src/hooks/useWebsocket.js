@@ -27,7 +27,6 @@ export const useWebsocket = ({
                 (payload.recipient === subscription && isSubscribed === true)
             ) {
                 if (payload.action === 'ROUTE_COMMAND') {
-                    console.log('delete');
                     if (onCommand) onCommand(payload.command);
                 } else {
                     onMessage(payload?.message?.message);

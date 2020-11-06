@@ -1,8 +1,17 @@
-import React from 'react';
-import { Button, TextField } from '@material-ui/core';
+/* eslint-disable no-unused-vars */
+import React, { Fragment } from 'react';
+import { Button } from '@material-ui/core';
 import classes from './Commander.module.scss';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import { useWebsocket } from '../../hooks/useWebsocket';
 import { useHistory } from 'react-router-dom';
+
+import map_img from '../../assets/images/sitemap.png';
 
 const wordToNumber = {
     zero: 0,
@@ -21,8 +30,11 @@ const Commander = () => {
     const history = useHistory();
     const [conn] = useWebsocket({ subscription: 'dashboard', onCommand });
     const [msg, setMsg] = React.useState('');
+    const [helpType, setHelpType] = React.useState('guide');
+    const [isOpen, setIsOpen] = React.useState(false);
 
     function onCommand(cmd) {
+        console.log(cmd);
         if (!cmd || typeof cmd !== 'string') return;
 
         const command = cmd.toLowerCase();
@@ -31,17 +43,20 @@ const Commander = () => {
         if (instructions && instructions.length >= 3) {
             const keyword = instructions[0];
             const action = instructions[1];
-            const command = instructions.slice(2);
+            const subject = instructions.slice(2);
 
             switch (keyword) {
+                case 'help':
+                    handleHelp(action, subject);
+                    break;
                 case 'page':
-                    handlePage(action, command);
+                    handlePage(action, subject);
                     break;
                 case 'event':
-                    handleEvent(action, command);
+                    handleEvent(action, subject);
                     break;
                 case 'context':
-                    handleContext(action, command);
+                    handleContext(action, subject);
                     break;
                 default:
                     break;
@@ -51,8 +66,32 @@ const Commander = () => {
         }
     }
 
-    const handlePage = (action, command) => {
-        const route = command.join('/');
+    const handleHelp = (action, subject) => {
+        const type = subject.join(' ');
+        switch (action) {
+            case 'show':
+                if (type === 'guide') {
+                    setHelpType('guide');
+                    setIsOpen(true);
+                    break;
+                }
+                if (type === 'map') {
+                    setHelpType('map');
+                    setIsOpen(true);
+                    break;
+                }
+                break;
+            case 'close':
+                console.log('close');
+                setIsOpen(false);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handlePage = (action, subject) => {
+        const route = subject.join('/');
         const go = route === 'landing' ? '' : route;
         switch (action) {
             case 'navigate':
@@ -72,8 +111,8 @@ const Commander = () => {
                 break;
         }
     };
-    const handleContext = (action, command) => {
-        const rest = command.join(' ');
+    const handleContext = (action, subject) => {
+        const rest = subject.join(' ');
         switch (action) {
             case 'type':
                 {
@@ -108,18 +147,18 @@ const Commander = () => {
         }
     };
 
-    const handleEvent = (action, command) => {
-        const input = command.join(' ');
+    const handleEvent = (action, subject) => {
+        const input = subject.join(' ');
 
         switch (action) {
             case 'scroll':
-                if (command[0] === 'up') {
-                    if (command[1] === 'max') window.scrollBy(0, -500000);
-                    else window.scrollBy(0, parseInt(`-${command[1]}`) * 2);
+                if (subject[0] === 'up') {
+                    if (subject[1] === 'max') window.scrollBy(0, -500000);
+                    else window.scrollBy(0, parseInt(`-${subject[1]}`) * 2);
                 }
-                if (command[0] === 'down') {
-                    if (command[1] === 'max') window.scrollBy(0, 500000);
-                    else window.scrollBy(0, parseInt(`${command[1]}`) * 2);
+                if (subject[0] === 'down') {
+                    if (subject[1] === 'max') window.scrollBy(0, 500000);
+                    else window.scrollBy(0, parseInt(`${subject[1]}`) * 2);
                 }
                 break;
             case 'click':
@@ -147,29 +186,147 @@ const Commander = () => {
     };
 
     const dispatchMessage = () => {
-        onCommand(msg);
-        // conn.dispatchCommand(msg);
+        // onCommand(msg);
+        conn.dispatchCommand(msg);
     };
 
     return (
-        <div className={classes.commander} tabIndex={-1}>
-            <TextField
-                label="Command"
-                variant="outlined"
-                size="small"
-                value={msg}
-                onChange={(e) => setMsg(e.target.value)}
+        <Fragment>
+            <AlertDialog
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                type={helpType}
             />
-            <Button
-                style={{ marginLeft: 15 }}
-                variant="contained"
-                color="primary"
-                onClick={dispatchMessage}
-            >
-                Send
-            </Button>
-        </div>
+            {/*             <div className={classes.commander}>
+                <TextField
+                    label="Command"
+                    variant="outlined"
+                    size="small"
+                    value={msg}
+                    onChange={(e) => setMsg(e.target.value)}
+                />
+                <Button
+                    style={{ marginLeft: 15 }}
+                    variant="contained"
+                    color="primary"
+                    onClick={dispatchMessage}
+                >
+                    Send
+                </Button>
+            </div> */}
+        </Fragment>
     );
 };
 
 export default Commander;
+
+function AlertDialog(props) {
+    return (
+        <div>
+            <Dialog
+                open={props.isOpen}
+                onClose={() => props.setIsOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                fullWidth
+                maxWidth="lg"
+            >
+                <DialogTitle
+                    id="alert-dialog-title"
+                    style={{ textTransform: 'capitalize' }}
+                >
+                    {props.type}
+                </DialogTitle>
+                <DialogContent>
+                    {props.type === 'guide' ? <Guide /> : <Map />}
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => props.setIsOpen(false)}
+                        color="primary"
+                        variant="contained"
+                    >
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+}
+
+function Guide() {
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>Keyword</th>
+                    <th>Action</th>
+                    <th>Subject</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>help</b>
+                    </td>
+                    <td>show</td>
+                    <td>[Map | Guide |]</td>
+                </tr>
+                <tr>
+                    <td>help</td>
+                    <td>close</td>
+                    <td>Dialog</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>page</b>
+                    </td>
+                    <td>navigate</td>
+                    <td>[Landing | Login | About | Help...]</td>
+                </tr>
+                <tr>
+                    <td>page</td>
+                    <td>navigate</td>
+                    <td>[Dashboard Home | Dashboard Dispatcher...]</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>event</b>
+                    </td>
+                    <td>click</td>
+                    <td>[Sign In]</td>
+                </tr>
+                <tr>
+                    <td>event</td>
+                    <td>focus</td>
+                    <td>[Email | Password]</td>
+                </tr>
+                <tr>
+                    <td>event</td>
+                    <td>scroll</td>
+                    <td>[Up | Down] [&lt;number&gt; | Max]</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>context</b>
+                    </td>
+                    <td>type</td>
+                    <td>[&lt;text&gt;]</td>
+                </tr>
+                <tr>
+                    <td>context</td>
+                    <td>format</td>
+                    <td>[Email | Password]</td>
+                </tr>
+            </tbody>
+        </table>
+    );
+}
+
+function Map() {
+    return (
+        <div className={classes.map}>
+            <img src={map_img} alt="sitemap" />
+        </div>
+    );
+}

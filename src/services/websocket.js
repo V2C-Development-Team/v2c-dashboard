@@ -31,7 +31,7 @@ export const wsRegister = (ws) => {
 
         ws.addEventListener('message', (event) => {
             const payload = JSON.parse(event.data);
-            console.log(JSON.stringify(payload));
+            // console.log(JSON.stringify(payload));
             if (
                 payload?.recipient &&
                 payload.recipient.toLowerCase() === pocName.toLowerCase()

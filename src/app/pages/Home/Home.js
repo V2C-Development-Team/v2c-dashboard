@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Fragment, useEffect } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import PinnedCard from '../../components/Cards/PinnedCard';
@@ -16,15 +17,17 @@ const tempPins = [
 
 const Home = (props) => {
     const [isFrameOpen, setIsFrameOpen] = React.useState(false);
-    const [frameSrc, setIsFrameSrc] = React.useState('');
+    const [frameSrc, setFrameSrc] = React.useState('');
+    const [frameTitle, SetFrameTitle] = React.useState('');
     const [isConnOpen, setIsConnOpen] = React.useState(false);
-    const [pins, setPins] = React.useState(tempPins);
+    const [pins, setPins] = React.useState([]);
     const [pinsComponent, setPinsComponent] = React.useState([]);
     const MAX_PINS = 3;
 
-    const handleOnConnect = (id, src) => {
+    const handleOnConnect = (id, src, title) => {
         setIsFrameOpen(true);
-        setIsFrameSrc(src);
+        setFrameSrc(src);
+        SetFrameTitle(title);
     };
     const handleOnDelete = (id) => {
         if (window.confirm('Remove pinned connection?')) {
@@ -53,7 +56,9 @@ const Home = (props) => {
                 tempPinsComponent.push(
                     <Grid item xs={12} md={3} key={i}>
                         <PinnedCard
-                            onConnect={() => handleOnConnect(i, pins[i].src)}
+                            onConnect={() =>
+                                handleOnConnect(i, pins[i].src, pins[i].title)
+                            }
                             onDelete={() => handleOnDelete(i)}
                             title={pins[i].title}
                             type={pins[i].type}
@@ -81,6 +86,7 @@ const Home = (props) => {
                 isFrameOpen={isFrameOpen}
                 setIsFrameOpen={setIsFrameOpen}
                 src={frameSrc}
+                title={frameTitle}
             />
             <AddConnectionDialog
                 isConnOpen={isConnOpen}

@@ -6,6 +6,7 @@ import classes from './Layout.module.scss';
 import Main from '../Main/Main';
 import { AuthContext } from '../../context/authContext';
 import auth from '../../whoami/auth';
+import Commander from '../Commander/Commander';
 
 const Layout = (props) => {
     const [isAuth, setIsAuth] = useState(auth.authenticated);
@@ -15,6 +16,7 @@ const Layout = (props) => {
         >
             <div className={classes.layout}>
                 <Main />
+                <Commander />
                 {/* <App /> */}
             </div>
         </AuthContext.Provider>

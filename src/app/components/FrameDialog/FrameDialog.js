@@ -38,6 +38,7 @@ const FrameDialog = (props) => {
                 </DialogTitle>
                 <DialogContent>
                     <iframe
+                        id={props.title}
                         src={props.src}
                         title={props.title}
                         style={styles.gameFrame}

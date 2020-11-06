@@ -4,7 +4,7 @@ Object.freeze(stateEnum);
 let socket = new WebSocket(process.env.REACT_APP_WS_URL);
 
 const appName = 'DASHBOARD';
-const pocName = 'DESKTOP';
+const pocName = 'GAMING';
 const eavesDrop = true;
 
 export const reconnect = () => new WebSocket(process.env.REACT_APP_WS_URL);
@@ -31,18 +31,20 @@ export const wsRegister = (ws) => {
 
         ws.addEventListener('message', (event) => {
             const payload = JSON.parse(event.data);
-            console.log(payload);
-            // if message is for gaming call the available fn
+            console.log(JSON.stringify(payload));
             if (
                 payload?.recipient &&
                 payload.recipient.toLowerCase() === pocName.toLowerCase()
             ) {
-                const gameStationEl = document.getElementById('game-station');
+                const gameStationEl = document.getElementById('gaming');
                 const message = payload.command || '';
                 console.log(`pocMessage will be => ${message}`);
                 if (gameStationEl) {
                     try {
-                        gameStationEl.contentWindow.postMessage(message);
+                        gameStationEl.contentWindow.postMessage(
+                            message,
+                            'http://localhost:5000'
+                        );
                     } catch (error) {
                         console.error(error);
                     }
@@ -50,13 +52,6 @@ export const wsRegister = (ws) => {
             }
         });
     }
-
-    ws.send(
-        JSON.stringify({
-            action: 'DISPATCH_COMMAND',
-            command: 'move right',
-        })
-    );
 };
 
 export const wsDeregister = (ws) => {

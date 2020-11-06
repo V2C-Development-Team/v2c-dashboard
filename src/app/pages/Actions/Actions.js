@@ -60,8 +60,7 @@ const Actions = (props) => {
     const [commands, setCommands] = useState([]);
     const [macros, setMacros] = useState([]);
     const [actions, setActions] = useState({});
-    // eslint-disable-next-line no-unused-vars
-    const [messages, conn] = useWebsocket({ subscription: DEVICE_NAME });
+    const [conn] = useWebsocket({ subscription: DEVICE_NAME });
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

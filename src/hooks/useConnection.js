@@ -86,7 +86,7 @@ export const useConnection = () => {
             if (attempt <= 3) {
                 interval = setInterval(() => {
                     resuscitate();
-                }, 6000);
+                }, 7000);
             }
         } else {
             clearInterval(interval);

@@ -20,37 +20,39 @@ export const wsRegister = (ws) => {
             })
         );
 
-        // setup and route gaming poc commands
-        ws.send(
-            JSON.stringify({
-                action: 'REGISTER_LISTENER',
-                app: pocName,
-                eavesdrop: false,
-            })
-        );
+        setTimeout(() => {
+            // setup and route gaming poc commands
+            ws.send(
+                JSON.stringify({
+                    action: 'REGISTER_LISTENER',
+                    app: pocName,
+                    eavesdrop: false,
+                })
+            );
 
-        ws.addEventListener('message', (event) => {
-            const payload = JSON.parse(event.data);
-            // console.log(JSON.stringify(payload));
-            if (
-                payload?.recipient &&
-                payload.recipient.toLowerCase() === pocName.toLowerCase()
-            ) {
-                const gameStationEl = document.getElementById('gaming');
-                const message = payload.command || '';
-                console.log(`pocMessage will be => ${message}`);
-                if (gameStationEl) {
-                    try {
-                        gameStationEl.contentWindow.postMessage(
-                            message,
-                            'http://localhost:5000'
-                        );
-                    } catch (error) {
-                        console.error(error);
+            ws.addEventListener('message', (event) => {
+                const payload = JSON.parse(event.data);
+                // console.log(JSON.stringify(payload));
+                if (
+                    payload?.recipient &&
+                    payload.recipient.toLowerCase() === pocName.toLowerCase()
+                ) {
+                    const gameStationEl = document.getElementById('gaming');
+                    const message = payload.command || '';
+                    console.log(`pocMessage will be => ${message}`);
+                    if (gameStationEl) {
+                        try {
+                            gameStationEl.contentWindow.postMessage(
+                                message,
+                                'http://localhost:5000'
+                            );
+                        } catch (error) {
+                            console.error(error);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }, 2000);
     }
 };
 

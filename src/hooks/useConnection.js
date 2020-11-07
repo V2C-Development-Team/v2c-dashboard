@@ -33,10 +33,6 @@ export const useConnection = () => {
             setAttempt(1);
             enqueueSnackbar('DASHBOARD connected', {
                 variant: 'success',
-                anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                },
                 preventDuplicate: true,
             });
         });
@@ -48,10 +44,6 @@ export const useConnection = () => {
             setIsConnected(false);
             enqueueSnackbar('Not connected', {
                 variant: 'error',
-                anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                },
                 preventDuplicate: true,
             });
         });
@@ -64,10 +56,6 @@ export const useConnection = () => {
         setAttempt((attempt) => attempt + 1);
         enqueueSnackbar(`Reconnecting... ${attempt} of 3`, {
             variant: 'warning',
-            anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'center',
-            },
             preventDuplicate: true,
         });
     }, [attempt, connectListener, disconnectListener, enqueueSnackbar]);
@@ -86,7 +74,7 @@ export const useConnection = () => {
             if (attempt <= 3) {
                 interval = setInterval(() => {
                     resuscitate();
-                }, 7000);
+                }, 6000);
             }
         } else {
             clearInterval(interval);

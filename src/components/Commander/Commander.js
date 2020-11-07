@@ -340,12 +340,7 @@ function Guide() {
                     <td>
                         <b>context</b>
                     </td>
-                    <td>type</td>
-                    <td>[&lt;text&gt;]</td>
-                </tr>
-                <tr>
-                    <td>context</td>
-                    <td>append</td>
+                    <td>[type | append]</td>
                     <td>[&lt;text&gt;]</td>
                 </tr>
                 <tr>

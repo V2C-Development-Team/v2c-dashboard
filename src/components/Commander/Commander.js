@@ -34,7 +34,7 @@ const Commander = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
     function onCommand(cmd) {
-        console.log(cmd);
+        // console.log(cmd);
         if (!cmd || typeof cmd !== 'string') return;
 
         const command = cmd.toLowerCase();
@@ -50,6 +50,7 @@ const Commander = () => {
                     handleHelp(action, subject);
                     break;
                 case 'page':
+                case 'paige':
                     handlePage(action, subject);
                     break;
                 case 'event':
@@ -82,7 +83,6 @@ const Commander = () => {
                 }
                 break;
             case 'close':
-                console.log('close');
                 setIsOpen(false);
                 break;
             default:
@@ -119,6 +119,20 @@ const Commander = () => {
                     const activeElement = document.activeElement;
                     activeElement.focus();
                     activeElement.value = rest;
+                }
+                break;
+            case 'append':
+                {
+                    const activeElement = document.activeElement;
+                    activeElement.focus();
+                    activeElement.value += rest;
+                }
+                break;
+            case 'delete':
+                {
+                    const activeElement = document.activeElement;
+                    activeElement.focus();
+                    activeElement.value = '';
                 }
                 break;
             case 'format':
@@ -165,7 +179,13 @@ const Commander = () => {
                 if (input === 'sign in') {
                     const el = document.getElementById('signIn');
                     if (el) el.click();
-                    break;
+                }
+                break;
+            case 'connect':
+            case 'close':
+                if (input === 'gaming') {
+                    const el = document.getElementById('gaming');
+                    if (el) el.click();
                 }
                 break;
             case 'focus':
@@ -270,7 +290,7 @@ function Guide() {
                         <b>help</b>
                     </td>
                     <td>show</td>
-                    <td>[Map | Guide |]</td>
+                    <td>[Map | Guide]</td>
                 </tr>
                 <tr>
                     <td>help</td>
@@ -304,7 +324,17 @@ function Guide() {
                 <tr>
                     <td>event</td>
                     <td>scroll</td>
-                    <td>[Up | Down] [&lt;number&gt; | Max]</td>
+                    <td>[Up | Down] &nbsp; [&lt;number&gt; | Max]</td>
+                </tr>
+                <tr>
+                    <td>context</td>
+                    <td>format</td>
+                    <td>[Email | Password]</td>
+                </tr>
+                <tr>
+                    <td>context</td>
+                    <td>[connect | close]</td>
+                    <td>[gaming]</td>
                 </tr>
                 <tr>
                     <td>
@@ -315,8 +345,15 @@ function Guide() {
                 </tr>
                 <tr>
                     <td>context</td>
-                    <td>format</td>
-                    <td>[Email | Password]</td>
+                    <td>append</td>
+                    <td>[&lt;text&gt;]</td>
+                </tr>
+                <tr>
+                    <td>context</td>
+                    <td>delete</td>
+                    <td>
+                        [<i>this</i>]
+                    </td>
                 </tr>
             </tbody>
         </table>

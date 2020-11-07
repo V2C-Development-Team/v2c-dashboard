@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const AddConnectionDialog = (props) => {
     const classes = useStyles();
     const [url, setUrl] = useState('');
-    const [type, setType] = useState('');
+    const [type, setType] = useState('Game');
     const [title, setTitle] = useState('');
 
     React.useEffect(() => {
@@ -67,7 +67,9 @@ const AddConnectionDialog = (props) => {
                             value={type}
                             onChange={(e) => setType(e.target.value)}
                         >
-                            <MenuItem value={'Game'}>Game</MenuItem>
+                            <MenuItem value={'Game'} selected>
+                                Game
+                            </MenuItem>
                             <MenuItem value={'App'}>App</MenuItem>
                         </Select>
                     </FormControl>

@@ -33,14 +33,8 @@ export const useWebsocket = ({
                 }
             }
         },
-        [
-            allowVerbose,
-            isSubscribed,
-            allowBroadcast,
-            subscription,
-            onMessage,
-            onCommand,
-        ]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [allowVerbose, isSubscribed, allowBroadcast, subscription]
     );
 
     conn.dispatchMessage = (message, recipient = '', machine = '') => {

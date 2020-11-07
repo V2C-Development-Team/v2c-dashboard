@@ -64,6 +64,13 @@ export const wsDeregister = (ws) => {
                 app: appName,
             })
         );
+
+        ws.send(
+            JSON.stringify({
+                action: 'DEREGISTER_LISTENER',
+                app: pocName,
+            })
+        );
     }
 };
 

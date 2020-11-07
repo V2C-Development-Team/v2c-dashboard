@@ -9,9 +9,9 @@ import AddConnectionDialog from '../../AddConnectionDialog/AddConnectionDialog';
 const tempPins = [
     {
         id: 0,
-        src: 'https://comphonia.com/playground/demos/v2c-gaming-poc/index.html',
+        src: 'http://localhost:5000',
         type: 'Game',
-        title: 'Gaming Station',
+        title: 'gaming',
     },
 ];
 
@@ -20,12 +20,12 @@ const Home = (props) => {
     const [frameSrc, setFrameSrc] = React.useState('');
     const [frameTitle, SetFrameTitle] = React.useState('');
     const [isConnOpen, setIsConnOpen] = React.useState(false);
-    const [pins, setPins] = React.useState([]);
+    const [pins, setPins] = React.useState(tempPins);
     const [pinsComponent, setPinsComponent] = React.useState([]);
     const MAX_PINS = 3;
 
     const handleOnConnect = (id, src, title) => {
-        setIsFrameOpen(true);
+        setIsFrameOpen((f) => !f);
         setFrameSrc(src);
         SetFrameTitle(title);
     };

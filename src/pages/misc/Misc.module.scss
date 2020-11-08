@@ -1,0 +1,42 @@
+.content {
+    line-height: 1.4em;
+    margin-top: 50px;
+}
+.team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.imgContainer {
+    width: 250px;
+    max-width: 100%;
+    margin: 5em auto 2em;
+    & > img {
+        width: 100%;
+    }
+}
+
+.teamCard {
+    margin: 5px 10px;
+    width: calc((100% / 4) - 20px);
+    min-width: 250px;
+    height: 270px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1em;
+}
+
+.teamImgContainer {
+    width: 180px;
+    height: 180px;
+    max-width: 100%;
+    margin: 10px 5px;
+    & > img {
+        width: 100%;
+        border-radius: 50%;
+    }
+}

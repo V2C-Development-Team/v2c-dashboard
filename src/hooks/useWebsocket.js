@@ -8,18 +8,17 @@ export const useWebsocket = ({
     subscribe = true,
     allowBroadcast = false,
     allowVerbose = false,
+    onMessage,
+    onCommand,
 }) => {
-    const [messages, setMessages] = useState([]);
     const [isSubscribed, setIsSubscribed] = useState(subscribe);
 
     const filterMessage = useCallback(
         (rawPayload) => {
             const payload = JSON.parse(rawPayload);
+            // console.log(payload)
             if (allowVerbose && isSubscribed === true) {
-                setMessages((messages) => [
-                    ...messages,
-                    JSON.stringify(payload),
-                ]);
+                onMessage(JSON.stringify(payload));
             }
             if (
                 (allowBroadcast &&
@@ -27,16 +26,18 @@ export const useWebsocket = ({
                     !payload.recipient) ||
                 (payload.recipient === subscription && isSubscribed === true)
             ) {
-                setMessages((messages) => [
-                    ...messages,
-                    payload?.message?.message,
-                ]);
+                if (payload.action === 'ROUTE_COMMAND') {
+                    if (onCommand) onCommand(payload.command);
+                } else {
+                    onMessage(payload?.message?.message);
+                }
             }
         },
-        [isSubscribed, allowBroadcast, allowVerbose, subscription]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [allowVerbose, isSubscribed, allowBroadcast, subscription]
     );
 
-    conn.dispatch = (message, recipient = '', machine = '') => {
+    conn.dispatchMessage = (message, recipient = '', machine = '') => {
         if (socket.readyState === stateEnum.OPEN) {
             socket.send(
                 JSON.stringify({
@@ -44,6 +45,16 @@ export const useWebsocket = ({
                     message,
                     machine,
                     recipient,
+                })
+            );
+        }
+    };
+    conn.dispatchCommand = (command) => {
+        if (socket.readyState === stateEnum.OPEN) {
+            socket.send(
+                JSON.stringify({
+                    action: 'DISPATCH_COMMAND',
+                    command,
                 })
             );
         }
@@ -88,5 +99,5 @@ export const useWebsocket = ({
         });
     }, [filterMessage]);
 
-    return [messages, conn];
+    return [conn];
 };

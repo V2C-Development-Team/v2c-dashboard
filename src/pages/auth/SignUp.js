@@ -110,6 +110,7 @@ const SignUp = () => {
             auth.setCredentials(email, password);
             await apiInterface.getConfig({ isAuth: true }, cancelSource.token);
             await apiInterface.setConfig({ username }, cancelSource.token);
+            auth.logout();
             history.push('/login');
         } catch (error) {
             setSignUpError(error.message);

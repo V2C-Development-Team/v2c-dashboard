@@ -6,13 +6,15 @@ import Metrics from '../../pages/Metrics/Metrics';
 import Dispatcher from '../../pages/Dispatcher/Dispatcher';
 import Network from '../../pages/Network/Network';
 import Actions from '../../pages/Actions/Actions';
+import { AppStateContext } from '../../../context/appStateContext';
 
 const Dashboard = (props) => {
+    const appStateContext = React.useContext(AppStateContext);
     return (
         <div className={classes.dashboard}>
             <main className={classes.main}>
                 <div className={classes.statusText}>
-                    {props.isConnected ? 'online' : 'offline'}
+                    {appStateContext.isConnected ? 'online' : 'offline'}
                 </div>
                 <Switch>
                     <Route path="/dashboard/metrics" component={Metrics} />

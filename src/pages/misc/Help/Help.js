@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -58,7 +58,7 @@ const Help = () => {
     const [questions, setQuestions] = useState(helpData);
 
     const handleSearch = (e) => {
-        const qry = e.target.value;
+        const qry = e.target.value || '';
         setQuery(qry);
         //search questions
         let tempQ = helpData.filter(
@@ -105,6 +105,7 @@ const Help = () => {
                     <IconButton
                         className={classes.iconButton}
                         aria-label="clear"
+                        onClick={handleSearch}
                     >
                         <CloseIcon />
                     </IconButton>

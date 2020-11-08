@@ -4,6 +4,7 @@ Object.freeze(stateEnum);
 let socket = new WebSocket(process.env.REACT_APP_WS_URL);
 
 const appName = 'DASHBOARD';
+const pocName = 'GAMING';
 const eavesDrop = true;
 
 export const reconnect = () => new WebSocket(process.env.REACT_APP_WS_URL);
@@ -18,6 +19,40 @@ export const wsRegister = (ws) => {
                 eavesdrop: eavesDrop,
             })
         );
+
+        setTimeout(() => {
+            // setup and route gaming poc commands
+            ws.send(
+                JSON.stringify({
+                    action: 'REGISTER_LISTENER',
+                    app: pocName,
+                    eavesdrop: false,
+                })
+            );
+
+            ws.addEventListener('message', (event) => {
+                const payload = JSON.parse(event.data);
+                // console.log(JSON.stringify(payload));
+                if (
+                    payload?.recipient &&
+                    payload.recipient.toLowerCase() === pocName.toLowerCase()
+                ) {
+                    const gameStationEl = document.getElementById('gaming');
+                    const message = payload.command || '';
+                    console.log(`pocMessage will be => ${message}`);
+                    if (gameStationEl) {
+                        try {
+                            gameStationEl.contentWindow.postMessage(
+                                message,
+                                'http://localhost:5000'
+                            );
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }
+                }
+            });
+        }, 2000);
     }
 };
 
@@ -27,6 +62,13 @@ export const wsDeregister = (ws) => {
             JSON.stringify({
                 action: 'DEREGISTER_LISTENER',
                 app: appName,
+            })
+        );
+
+        ws.send(
+            JSON.stringify({
+                action: 'DEREGISTER_LISTENER',
+                app: pocName,
             })
         );
     }

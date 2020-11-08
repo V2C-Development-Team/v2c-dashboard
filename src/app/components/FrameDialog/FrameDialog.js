@@ -34,12 +34,13 @@ const FrameDialog = (props) => {
                 disableBackdropClick
             >
                 <DialogTitle id="alert-dialog-slide-title">
-                    {'Gaming Station'}
+                    {props.title}
                 </DialogTitle>
                 <DialogContent>
                     <iframe
-                        src="https://comphonia.com/playground/demos/v2c-gaming-poc/web-pages/index.html"
-                        title="boxy"
+                        id={props.title}
+                        src={props.src}
+                        title={props.title}
                         style={styles.gameFrame}
                     ></iframe>
                 </DialogContent>

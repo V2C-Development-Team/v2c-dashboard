@@ -26,7 +26,12 @@ export const useWebsocket = ({
                     !payload.recipient) ||
                 (payload.recipient === subscription && isSubscribed === true)
             ) {
-                if (payload.action === 'ROUTE_COMMAND') {
+                if (
+                    payload?.recipient &&
+                    payload.recipient.toLowerCase() ===
+                        subscription.toLowerCase() &&
+                    payload.eavesdropped === false
+                ) {
                     if (onCommand) onCommand(payload.command);
                 } else {
                     onMessage(payload?.message?.message);

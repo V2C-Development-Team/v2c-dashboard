@@ -184,7 +184,7 @@ const Commander = () => {
             case 'connect':
             case 'close':
                 if (input === 'gaming') {
-                    const el = document.getElementById('gaming');
+                    const el = document.getElementById('gaming-btn');
                     if (el) el.click();
                 }
                 break;
@@ -327,14 +327,14 @@ function Guide() {
                     <td>[Up | Down] &nbsp; [&lt;number&gt; | Max]</td>
                 </tr>
                 <tr>
-                    <td>context</td>
-                    <td>format</td>
-                    <td>[Email | Password]</td>
+                    <td>event</td>
+                    <td>[connect | close]</td>
+                    <td>[gaming]</td>
                 </tr>
                 <tr>
                     <td>context</td>
-                    <td>[connect | close]</td>
-                    <td>[gaming]</td>
+                    <td>format</td>
+                    <td>[Email | Password]</td>
                 </tr>
                 <tr>
                     <td>

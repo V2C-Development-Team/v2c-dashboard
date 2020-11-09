@@ -81,7 +81,7 @@ const PinnedCard = ({ title, type, empty, onConnect, onDelete }) => {
                 <Tooltip title="Connect">
                     <IconButton
                         onClick={onConnect ? onConnect : null}
-                        id={title}
+                        id={title + '-btn'}
                     >
                         <FiZap fontSize="18px" />
                     </IconButton>

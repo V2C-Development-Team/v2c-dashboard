@@ -32,10 +32,12 @@ export const wsRegister = (ws) => {
 
             ws.addEventListener('message', (event) => {
                 const payload = JSON.parse(event.data);
-                // console.log(JSON.stringify(payload));
+                console.log(JSON.stringify(payload));
                 if (
+                    payload.action === 'ROUTE_COMMAND' &&
                     payload?.recipient &&
-                    payload.recipient.toLowerCase() === pocName.toLowerCase()
+                    payload.recipient.toLowerCase() === pocName.toLowerCase() &&
+                    payload.eavesdropped === false
                 ) {
                     const gameStationEl = document.getElementById('gaming');
                     const message = payload.command || '';

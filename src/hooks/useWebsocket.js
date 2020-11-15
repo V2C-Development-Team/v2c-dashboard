@@ -18,7 +18,7 @@ export const useWebsocket = ({
             const payload = JSON.parse(rawPayload);
             // console.log(payload)
             if (allowVerbose && isSubscribed === true) {
-                onMessage(JSON.stringify(payload));
+                if (onMessage) onMessage(JSON.stringify(payload));
             }
             if (
                 (allowBroadcast &&
@@ -34,7 +34,7 @@ export const useWebsocket = ({
                 ) {
                     if (onCommand) onCommand(payload.command);
                 } else {
-                    onMessage(payload?.message?.message);
+                    if (onMessage) onMessage(payload?.message?.message);
                 }
             }
         },
